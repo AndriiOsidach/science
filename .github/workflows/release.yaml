@@ -1,0 +1,26 @@
+name: Release
+
+on:
+  push:
+    tags:
+    - "*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v4
+    - name: LFS pull
+      run: git lfs pull
+    - uses: xu-cheng/texlive-action@v2
+      with:
+        scheme: full
+        run: |
+          apk add diffutils findutils git make
+          git config --global --add safe.directory "*"
+          make
+    - uses: ncipollo/release-action@v1
+      with:
+        artifacts: "build/*.pdf"

@@ -1,0 +1,233 @@
+\documentclass{article}
+
+\usepackage{./src/main}
+\graphicspath{{./figure/}}
+\addbibresource{src/references.bib}
+
+\begin{document}
+
+% ===================== ABSTRACTS FIRST =====================
+% TODO: Replace placeholders with your real topic, goals, results, metrics.
+\begin{uaabstract}
+Бакалаврська кваліфікаційна робота присвячена розробленню та експериментальному
+дослідженню гібридного підходу до класифікації зображень рукописного тексту. Мета роботи —
+підвищити точність класифікації у випадку малих і середніх навчальних вибірок за рахунок
+розширення простору ознак виходами ймовірнісної нейронної мережі та подальшого навчання
+класичних алгоритмів машинного навчання.
+
+Наукова новизна полягає у поєднанні PNN як генератора інформативних ознак із
+лінійними та ансамблевими класифікаторами, що дає змогу зменшити розмірність пошуку
+гіперпараметрів і підвищити стійкість до варіативності почерку. Практична цінність — у створенні
+відтворюваного конвеєра, який дозволяє порівнювати моделі, підбирати гіперпараметри та
+автоматично формувати звіт.
+
+Експерименти на реальному біомедичному наборі демонструють підвищення F1-міри на
+$5$–$8\,\%$ порівняно з базовою лінією.
+
+\textbf{Загальний обсяг}: 70 сторінок, 33 рисунки, 34 посилання.
+
+\textbf{Ключові слова}: ймовірнісна нейронна мережа, класифікація, рукописний текст, розширення
+вибірки, машинне навчання.
+\end{uaabstract}
+
+\begin{enabstract}
+This thesis develops and evaluates a hybrid approach to handwritten text image classification.
+The goal is to improve accuracy on small and medium datasets by expanding the feature space with
+outputs of a Probabilistic Neural Network (PNN), followed by training standard machine-learning
+classifiers.
+
+The contribution is a reproducible pipeline that couples a PNN feature generator with linear
+and ensemble classifiers, reducing hyperparameter search while improving robustness to handwriting
+variation. Experiments on a real biomedical dataset show a $5$–$8\,\%$ F1 improvement over a
+baseline.
+
+\textbf{Total length}: 70 pages, 33 figures, 34 references.
+
+\textbf{Keywords}: probabilistic neural network, classification, handwriting, feature expansion, machine learning.
+\end{enabstract}
+
+% ===================== TABLE OF CONTENTS =====================
+\clearpage
+\tableofcontents
+\clearpage
+
+% ===================== ABBREVIATIONS =====================
+% TODO: Adjust to your topic; keep only what you use in the text.
+\section*{ПЕРЕЛІК УМОВНИХ ПОЗНАЧЕНЬ}
+\addcontentsline{toc}{section}{ПЕРЕЛІК УМОВНИХ ПОЗНАЧЕНЬ}
+\begin{description}
+  \item[API] Application Programming Interface --- програмний інтерфейс.
+  \item[AI] Artificial Intelligence --- штучний інтелект.
+  \item[ML] Machine Learning --- машинне навчання.
+  \item[DL] Deep Learning --- глибинне навчання.
+  \item[PNN] Probabilistic Neural Network --- ймовірнісна нейронна мережа.
+  \item[UMAP] Uniform Manifold Approximation and Projection.
+  \item[t-SNE] t-distributed Stochastic Neighbor Embedding.
+  \item[CART] Classification and Regression Tree.
+\end{description}
+\clearpage
+
+% ===================== INTRODUCTION =====================
+\section*{ВСТУП}
+\addcontentsline{toc}{section}{ВСТУП}
+% (Why, What, How, Results, Structure)
+Оцифровування документів і рукописів створює попит на точні та відтворювані методи
+класифікації текстових зображень. \textbf{Мета роботи} — підвищити точність класифікації в
+умовах обмежених даних.
+
+\textbf{Завдання дослідження:}
+\begin{Marked_List}
+  \item виконати огляд і систематизацію методів сегментації й виділення ознак \cite{otsu1979,canny1986};
+  \item обґрунтувати гібридний підхід із розширенням ознак через PNN;
+  \item розробити конвеєр навчання, валідації та оцінювання якості;
+  \item провести експерименти та аналіз результатів на реальних даних;
+  \item сформулювати висновки, обмеження та напрями подальших досліджень.
+\end{Marked_List}
+
+Стаття \cite{lecun1998gradient} класично формулює підхід ``градієнтне навчання'' до розпізнавання
+документів; методи згорткових мереж \cite{krizhevsky2012imagenet,he2016deep} і оптимізації \cite{kingma2014adam}
+становлять технічну основу сучасних рішень. Для візуалізації високорозмірних ознак застосовують
+t-SNE \cite{tsne2008} та UMAP \cite{umap2018}.
+
+\textbf{Структура роботи.} Розділ~1 подає огляд і постановку задачі. Розділ~2 описує
+математичну модель і алгоритмічні компоненти. Розділ~3 присвячено реалізації та експериментам.
+Завершують роботу узагальнюючі висновки.
+
+% ===================== CHAPTER 1 =====================
+\section{ЗАГАЛЬНІ ПОЛОЖЕННЯ}
+
+\subsection{Проблемний контекст і постановка задачі}
+Ціль — побудувати класифікатор $f:\mathcal{X}\to\mathcal{Y}$, де $\mathcal{X}$ — простір зображень
+символів/слів, $\mathcal{Y}$ — множина класів. \textit{Вхідні} дані: зображення в градаціях сірого,
+неоднорідні умови сканування, варіативність почерку. \textit{Вихід}: мітка класу та,
+за наявності, конфіденси.
+
+\subsection{Огляд предметної області}
+Контурні методи й порогування залишаються базовими інструментами попередньої обробки
+\cite{otsu1979,canny1986}. Глибинні моделі \cite{lecun1998gradient,krizhevsky2012imagenet,he2016deep}
+забезпечують високу якість, але потребують великих вибірок та ретельного налаштування.
+
+\subsubsection{Базові етапи обробки}
+\begin{Numbered_List}
+  \item нормалізація та вирівнювання яскравості;
+  \item бінаризація (наприклад, Оцу \cite{otsu1979});
+  \item виділення контурів (Кенні \cite{canny1986});
+  \item сегментація символів/слів; екстракція ознак.
+\end{Numbered_List}
+
+\paragraph{Ілюстративний приклад.}
+Схема конвеєра наведена на рис.~\ref{fig:pipeline}.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.9\linewidth]{example-figure.png}
+  \caption{Схема запропонованого конвеєра класифікації рукописного тексту}
+  \label{fig:pipeline}
+\end{figure}
+
+\subsection{Формулювання підходу}
+Гіпотеза: \emph{виходи PNN як узагальнені апостеріорні оцінки} можуть слугувати компактним і
+стабільним представленням для класичних класифікаторів. Отже, шукаємо відображення
+$g:\mathcal{X}\to\mathbb{R}^k$ (PNN-ознаки) та класифікатор $h:\mathbb{R}^k\to\mathcal{Y}$, такий що
+$f(x)=h(g(x))$.
+
+% ===================== CHAPTER 2 =====================
+\section{ІНФОРМАЦІЙНЕ ТА МАТЕМАТИЧНЕ ЗАБЕЗПЕЧЕННЯ}
+
+\subsection{Передобробка та виділення ознак}
+Позначимо $I:\Omega\to[0,1]$ — нормоване зображення. Адаптивне порогування
+$
+T^\ast=\arg\max_T \ \mathrm{BetweenClassVar}(I,T)
+$
+реалізує критерій Оцу \cite{otsu1979}.
+Градієнтні оператори використовують для детекції границь \cite{canny1986}.
+
+\subsection{Гібридна модель PNN\,$\to$\,класифікатор}
+Нехай $\phi_\sigma(x)$ — вектор виходів PNN із параметром згладжування $\sigma$. Далі
+навчаємо $h$ (SVM, Random Forest або логістичну регресію) на $\phi_\sigma(x)$.
+Для оптимізації параметрів використовуємо крос-валідацію $k$-fold.
+\begin{equation}
+\label{eq:objective}
+\hat{\theta}=\arg\max_{\theta} \ \frac{1}{k}\sum_{i=1}^{k}\mathrm{F1}\bigl(h_{\theta}(\phi_\sigma(X_{-i})),\,Y_{-i}\bigr).
+\end{equation}
+Рівняння~\eqref{eq:objective} мінімізує \emph{узагальнену помилку} та захищає від
+перенавчання.
+
+\paragraph{Метрики якості.}
+Використовуються Accuracy, Precision, Recall та F1. Зразок оформлення наведено в табл.~\ref{tab:metrics}.
+\begin{table}[htbp]
+  \caption{Порівняння метрик якості для трьох підходів}
+  \label{tab:metrics}
+  \centering
+  \begin{tabular}{lccc}
+    \hline
+    Метод    & Точність & Повнота & F1   \\
+    \hline
+    Baseline & 0.84     & 0.81    & 0.82 \\
+    PNN+SVM  & 0.89     & 0.87    & 0.88 \\
+    PNN+RF   & 0.90     & 0.88    & 0.89 \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\subsection{Візуалізація та інтерпретація}
+Для інспекції кластерної структури застосовують t-SNE \cite{tsne2008} та UMAP \cite{umap2018}.
+\begin{Marked_List}
+  \item t-SNE добре розкриває локальну структуру, але чутливий до гіперпараметрів;
+  \item UMAP частіше зберігає глобальну структуру та масштабується краще.
+\end{Marked_List}
+
+\subsection{Загальні зауваги щодо відтворюваності}
+\begin{Numbered_List}
+  \item фіксуйте зерна генераторів випадкових чисел;
+  \item зберігайте версії даних і середовища виконання;
+  \item логування гіперпараметрів і метрик у єдиному форматі (CSV/JSON).
+\end{Numbered_List}
+
+% ===================== CHAPTER 3 =====================
+\section{ПРОГРАМНЕ ТА ТЕХНІЧНЕ ЗАБЕЗПЕЧЕННЯ}
+
+\subsection{Архітектура програмної системи}
+Система складається з модулів: \textit{io} (завантаження даних), \textit{preprocess},
+\textit{features} (PNN), \textit{models} (класифікатори), \textit{eval} (метрики, звіти).
+% TODO: у звіті додайте схему класів/модулів вашої реалізації.
+
+\subsection{Середовище виконання та вимоги}
+Python~3.x; бібліотеки для обробки зображень і ML; достатня RAM для навчання.
+Для оптимізації використовуємо Adam \cite{kingma2014adam} та циклічні графіки навчання за потреби.
+
+\subsection{Експериментальний протокол}
+\begin{Numbered_List}
+  \item поділ на train/validation/test без перетину екземплярів одного автора;
+  \item стратифікована вибірка для збалансованості класів;
+  \item $k$-fold крос-валідація для підбору $\sigma$ (PNN) та гіперпараметрів $h$;
+  \item статистична перевірка відмінностей (наприклад, парний t-тест на F1).
+\end{Numbered_List}
+
+\subsection{Загрози валідності}
+Похибки розмітки, дрейф даних, витік тестової інформації через препроцесинг. Необхідно
+перевіряти чутливість до параметрів та узагальнюваність на інших корпусах.
+
+% ===================== GENERAL CONCLUSIONS =====================
+\section*{ЗАГАЛЬНІ ВИСНОВКИ}
+\addcontentsline{toc}{section}{ЗАГАЛЬНІ ВИСНОВКИ}
+Запропоновано гібридний підхід PNN\,$\to$\,класифікатор, який підвищує F1 у сценаріях з
+обмеженими даними. Розроблено відтворюваний конвеєр експериментів, проведено
+порівняльний аналіз і сформульовано практичні рекомендації щодо вибору моделей та
+гіперпараметрів.
+
+% ===================== BIBLIOGRAPHY =====================
+\printbibliography[heading=bibintoc,title={СПИСОК ВИКОРИСТАНИХ ДЖЕРЕЛ}]
+
+% ===================== APPENDICES =====================
+\appendix
+
+\section*{Додаток А}
+\addcontentsline{toc}{section}{Додаток А}
+% TODO: Перенесіть сюди додаткові таблиці/ілюстрації, приклади даних.
+
+\section*{Додаток Б}
+\addcontentsline{toc}{section}{Додаток Б}
+% TODO: Посилання на репозиторій, інструкції відтворення (CLI, конфігурація, версії).
+
+\end{document}
