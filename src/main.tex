@@ -9,41 +9,41 @@
 % ===================== ABSTRACTS FIRST =====================
 % TODO: Replace placeholders with your real topic, goals, results, metrics.
 \begin{uaabstract}
-Бакалаврська кваліфікаційна робота присвячена розробленню та експериментальному
-дослідженню гібридного підходу до класифікації зображень рукописного тексту. Мета роботи —
-підвищити точність класифікації у випадку малих і середніх навчальних вибірок за рахунок
-розширення простору ознак виходами ймовірнісної нейронної мережі та подальшого навчання
-класичних алгоритмів машинного навчання.
+  Бакалаврська кваліфікаційна робота присвячена розробленню та експериментальному
+  дослідженню гібридного підходу до класифікації зображень рукописного тексту. Мета роботи —
+  підвищити точність класифікації у випадку малих і середніх навчальних вибірок за рахунок
+  розширення простору ознак виходами ймовірнісної нейронної мережі та подальшого навчання
+  класичних алгоритмів машинного навчання.
 
-Наукова новизна полягає у поєднанні PNN як генератора інформативних ознак із
-лінійними та ансамблевими класифікаторами, що дає змогу зменшити розмірність пошуку
-гіперпараметрів і підвищити стійкість до варіативності почерку. Практична цінність — у створенні
-відтворюваного конвеєра, який дозволяє порівнювати моделі, підбирати гіперпараметри та
-автоматично формувати звіт.
+  Наукова новизна полягає у поєднанні PNN як генератора інформативних ознак із
+  лінійними та ансамблевими класифікаторами, що дає змогу зменшити розмірність пошуку
+  гіперпараметрів і підвищити стійкість до варіативності почерку. Практична цінність — у створенні
+  відтворюваного конвеєра, який дозволяє порівнювати моделі, підбирати гіперпараметри та
+  автоматично формувати звіт.
 
-Експерименти на реальному біомедичному наборі демонструють підвищення F1-міри на
-$5$–$8\,\%$ порівняно з базовою лінією.
+  Експерименти на реальному біомедичному наборі демонструють підвищення F1-міри на
+  $5$–$8\,\%$ порівняно з базовою лінією.
 
-\textbf{Загальний обсяг}: 70 сторінок, 33 рисунки, 34 посилання.
+  \textbf{Загальний обсяг}: 70 сторінок, 33 рисунки, 34 посилання.
 
-\textbf{Ключові слова}: ймовірнісна нейронна мережа, класифікація, рукописний текст, розширення
-вибірки, машинне навчання.
+  \textbf{Ключові слова}: ймовірнісна нейронна мережа, класифікація, рукописний текст, розширення
+  вибірки, машинне навчання.
 \end{uaabstract}
 
 \begin{enabstract}
-This thesis develops and evaluates a hybrid approach to handwritten text image classification.
-The goal is to improve accuracy on small and medium datasets by expanding the feature space with
-outputs of a Probabilistic Neural Network (PNN), followed by training standard machine-learning
-classifiers.
+  This thesis develops and evaluates a hybrid approach to handwritten text image classification.
+  The goal is to improve accuracy on small and medium datasets by expanding the feature space with
+  outputs of a Probabilistic Neural Network (PNN), followed by training standard machine-learning
+  classifiers.
 
-The contribution is a reproducible pipeline that couples a PNN feature generator with linear
-and ensemble classifiers, reducing hyperparameter search while improving robustness to handwriting
-variation. Experiments on a real biomedical dataset show a $5$–$8\,\%$ F1 improvement over a
-baseline.
+  The contribution is a reproducible pipeline that couples a PNN feature generator with linear
+  and ensemble classifiers, reducing hyperparameter search while improving robustness to handwriting
+  variation. Experiments on a real biomedical dataset show a $5$–$8\,\%$ F1 improvement over a
+  baseline.
 
-\textbf{Total length}: 70 pages, 33 figures, 34 references.
+  \textbf{Total length}: 70 pages, 33 figures, 34 references.
 
-\textbf{Keywords}: probabilistic neural network, classification, handwriting, feature expansion, machine learning.
+  \textbf{Keywords}: probabilistic neural network, classification, handwriting, feature expansion, machine learning.
 \end{enabstract}
 
 % ===================== TABLE OF CONTENTS =====================
@@ -76,13 +76,13 @@ baseline.
 умовах обмежених даних.
 
 \textbf{Завдання дослідження:}
-\begin{Marked_List}
+\begin{itemize}
   \item виконати огляд і систематизацію методів сегментації й виділення ознак \cite{otsu1979,canny1986};
   \item обґрунтувати гібридний підхід із розширенням ознак через PNN;
   \item розробити конвеєр навчання, валідації та оцінювання якості;
   \item провести експерименти та аналіз результатів на реальних даних;
   \item сформулювати висновки, обмеження та напрями подальших досліджень.
-\end{Marked_List}
+\end{itemize}
 
 Стаття \cite{lecun1998gradient} класично формулює підхід ``градієнтне навчання'' до розпізнавання
 документів; методи згорткових мереж \cite{krizhevsky2012imagenet,he2016deep} і оптимізації \cite{kingma2014adam}
@@ -108,12 +108,12 @@ t-SNE \cite{tsne2008} та UMAP \cite{umap2018}.
 забезпечують високу якість, але потребують великих вибірок та ретельного налаштування.
 
 \subsubsection{Базові етапи обробки}
-\begin{Numbered_List}
+\begin{enumerate}
   \item нормалізація та вирівнювання яскравості;
   \item бінаризація (наприклад, Оцу \cite{otsu1979});
   \item виділення контурів (Кенні \cite{canny1986});
   \item сегментація символів/слів; екстракція ознак.
-\end{Numbered_List}
+\end{enumerate}
 
 \paragraph{Ілюстративний приклад.}
 Схема конвеєра наведена на рис.~\ref{fig:pipeline}.
@@ -137,7 +137,7 @@ $f(x)=h(g(x))$.
 \subsection{Передобробка та виділення ознак}
 Позначимо $I:\Omega\to[0,1]$ — нормоване зображення. Адаптивне порогування
 $
-T^\ast=\arg\max_T \ \mathrm{BetweenClassVar}(I,T)
+  T^\ast=\arg\max_T \ \mathrm{BetweenClassVar}(I,T)
 $
 реалізує критерій Оцу \cite{otsu1979}.
 Градієнтні оператори використовують для детекції границь \cite{canny1986}.
@@ -147,8 +147,8 @@ $
 навчаємо $h$ (SVM, Random Forest або логістичну регресію) на $\phi_\sigma(x)$.
 Для оптимізації параметрів використовуємо крос-валідацію $k$-fold.
 \begin{equation}
-\label{eq:objective}
-\hat{\theta}=\arg\max_{\theta} \ \frac{1}{k}\sum_{i=1}^{k}\mathrm{F1}\bigl(h_{\theta}(\phi_\sigma(X_{-i})),\,Y_{-i}\bigr).
+  \label{eq:objective}
+  \hat{\theta}=\arg\max_{\theta} \ \frac{1}{k}\sum_{i=1}^{k}\mathrm{F1}\bigl(h_{\theta}(\phi_\sigma(X_{-i})),\,Y_{-i}\bigr).
 \end{equation}
 Рівняння~\eqref{eq:objective} мінімізує \emph{узагальнену помилку} та захищає від
 перенавчання.
@@ -172,17 +172,17 @@ $
 
 \subsection{Візуалізація та інтерпретація}
 Для інспекції кластерної структури застосовують t-SNE \cite{tsne2008} та UMAP \cite{umap2018}.
-\begin{Marked_List}
+\begin{enumerate}
   \item t-SNE добре розкриває локальну структуру, але чутливий до гіперпараметрів;
   \item UMAP частіше зберігає глобальну структуру та масштабується краще.
-\end{Marked_List}
+\end{enumerate}
 
 \subsection{Загальні зауваги щодо відтворюваності}
-\begin{Numbered_List}
+\begin{itemize}
   \item фіксуйте зерна генераторів випадкових чисел;
   \item зберігайте версії даних і середовища виконання;
   \item логування гіперпараметрів і метрик у єдиному форматі (CSV/JSON).
-\end{Numbered_List}
+\end{itemize}
 
 % ===================== CHAPTER 3 =====================
 \section{ПРОГРАМНЕ ТА ТЕХНІЧНЕ ЗАБЕЗПЕЧЕННЯ}
@@ -197,12 +197,12 @@ Python~3.x; бібліотеки для обробки зображень і ML;
 Для оптимізації використовуємо Adam \cite{kingma2014adam} та циклічні графіки навчання за потреби.
 
 \subsection{Експериментальний протокол}
-\begin{Numbered_List}
+\begin{itemize}
   \item поділ на train/validation/test без перетину екземплярів одного автора;
   \item стратифікована вибірка для збалансованості класів;
   \item $k$-fold крос-валідація для підбору $\sigma$ (PNN) та гіперпараметрів $h$;
   \item статистична перевірка відмінностей (наприклад, парний t-тест на F1).
-\end{Numbered_List}
+\end{itemize}
 
 \subsection{Загрози валідності}
 Похибки розмітки, дрейф даних, витік тестової інформації через препроцесинг. Необхідно

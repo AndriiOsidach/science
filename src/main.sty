@@ -108,16 +108,28 @@
   {\titlerule*[.5pc]{.}\contentspage}
   [\addvspace{-0.35\baselineskip}]
 
-% ==================== LISTS ====================
-% Marked list: left 1.27 cm, hanging ≈ 1.22 cm
-\setlist[itemize,1]{label=\textbullet,leftmargin=1.27cm,labelsep=0.62cm,
-  itemsep=0pt,parsep=0pt,topsep=.5\baselineskip}
-\newenvironment{Marked_List}{\begin{itemize}}{\end{itemize}}
+% ==================== LISTS (per spec) ====================
+\setlist{parsep=0pt, itemsep=0pt, partopsep=0pt, topsep=.5\baselineskip}
 
-% Numbered list: left 1.37 cm, hanging ≈ 0.63 cm, Arabic 1.,2.,3...
-\setlist[enumerate,1]{label=\arabic*.,leftmargin=1.37cm,labelsep=0.63cm,
-  itemsep=0pt,parsep=0pt,topsep=.5\baselineskip,align=left}
-\newenvironment{Numbered_List}{\begin{enumerate}}{\end{enumerate}}
+% Marked_List (bullet)
+\setlist[itemize,1]{
+  label=\textbullet,
+  leftmargin=2.49cm,
+  labelindent=0pt,
+  labelwidth=0.84cm,
+  labelsep=0.38cm,
+  align=parleft
+}
+
+% Numbered_List
+\setlist[enumerate,1]{
+  label=\arabic*.,
+  leftmargin=2.54cm,
+  labelindent=0pt,
+  labelwidth=0.33cm,
+  labelsep=0.30cm,
+  align=parleft
+}
 
 % ==================== CAPTIONS ====================
 % 14pt body already; figure centered; table raggedleft
