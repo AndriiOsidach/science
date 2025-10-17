@@ -1,0 +1,13 @@
+services:
+  latex-builder:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+    user: latex
+    working_dir: /opt/code
+    volumes:
+      - .:/opt/code
+    command: make all

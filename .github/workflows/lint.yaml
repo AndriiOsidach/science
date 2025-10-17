@@ -1,0 +1,24 @@
+name: Lint
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  check-format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: LFS pull
+        run: git lfs pull
+      - uses: xu-cheng/texlive-action@v2
+        with:
+          scheme: full
+          run: |
+            apk add diffutils findutils git make
+            git config --global --add safe.directory "*"
+            make format
+      - name: Check if formatted
+        run: |
+          git diff --exit-code
