@@ -5,7 +5,8 @@ PDF_OUTPUT_DIR=build/pdfs
 all: build
 
 build: init
-	latexmk $(LATEXMK_ARGS) src/main.tex
+	latexmk $(LATEXMK_ARGS) src/main_uk.tex
+	latexmk $(LATEXMK_ARGS) src/main_en.tex
 	$(MAKE) pdfs
 
 pdfs:
