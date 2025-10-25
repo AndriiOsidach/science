@@ -1,4 +1,4 @@
-\ProvidesPackage{main}[2025/10/14 NULP core (XeLaTeX, Times New Roman, UA layout)]
+\ProvidesPackage{common}
 
 % ==================== REQUIREMENTS ====================
 \RequirePackage{iftex}
@@ -8,7 +8,6 @@
 
 % ==================== PACKAGE INCLUDES ====================
 \RequirePackage{fontspec}                         % Unicode fonts (TNR)
-\RequirePackage[main=ukrainian,english]{babel}    % Languages
 \RequirePackage{geometry}                         % Page layout
 \RequirePackage{setspace}                         % Line spacing
 \RequirePackage{graphicx}                         % Figures
@@ -49,22 +48,11 @@
 % Hyperref
 \hypersetup{hidelinks}
 
-% TOC caption (UA)
-\addto\captionsukrainian{\renewcommand{\contentsname}{ЗМІСТ}}
-
 % ==================== HEADINGS ====================
 % Use arabic numbers internally; print "РОЗДІЛ <n>." as the section label
 \renewcommand\thesection{\arabic{section}}
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
-
-% Section: fully centered (each wrapped line), bold 16pt, uppercase title
-\titleformat{\section}
-  {\centering\bfseries\fontsize{16pt}{24pt}\selectfont}
-  {РОЗДІЛ~\thesection.}
-  {0.5em}
-  {\MakeUppercase}
-\titlespacing*{\section}{0pt}{20pt}{6pt}
 
 % Subsection: bold 14pt, indented like main text
 \titleformat{\subsection}
@@ -80,15 +68,6 @@
 
 % ==================== TOC (РОЗДІЛ <n>. ……… page) ====================
 \contentsmargin{0pt}
-
-% Sections in TOC: dotted leaders, bold page
-\titlecontents{section}
-  [0pt]
-  {\normalsize\bfseries}                 % <-- no \MakeUppercase here
-  {РОЗДІЛ~\thecontentslabel.\enspace}
-  {}
-  {\titlerule*[.5pc]{.}\bfseries\contentspage}
-  [\addvspace{-0.25\baselineskip}]
 
 % Subsections in TOC
 \titlecontents{subsection}
