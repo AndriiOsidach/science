@@ -1,0 +1,244 @@
+\ProvidesPackage{main}
+
+% ==================== REQUIREMENTS ====================
+\RequirePackage{iftex}
+\ifXeTeX\else
+  \PackageError{main}{This package requires XeLaTeX}{Run with xelatex.}
+\fi
+
+% ==================== PACKAGE INCLUDES ====================
+\RequirePackage{fontspec}                         % Unicode fonts (TNR)
+\RequirePackage{geometry}                         % Page layout
+\RequirePackage{setspace}                         % Line spacing
+\RequirePackage{graphicx}                         % Figures
+\RequirePackage{tikz}                             % Diagrams
+\RequirePackage{float}                            % Float placement
+\RequirePackage{subcaption}                       % Subfigures
+\RequirePackage{hyperref}                         % Links
+\RequirePackage{amsmath}                          % Math
+\RequirePackage{cleveref}                         % Clever references
+\RequirePackage{xcolor}                           % Advanced colors
+\RequirePackage{tikz}                             % Graphics and diagrams
+\usetikzlibrary{arrows.meta, shapes.geometric, calc, positioning}
+\RequirePackage{siunitx}                          % Standardized units
+\RequirePackage{amssymb,amsfonts}                 % \mathbb, \mathcal, etc.
+\RequirePackage{titlesec}                         % Headings
+\RequirePackage{multirow}                         % Merged cells in tables
+\RequirePackage{booktabs}                         % Professional table rules
+\RequirePackage{algorithm}                        % Algorithm environment
+\RequirePackage{algpseudocode}                    % Pseudocode support
+\RequirePackage{titletoc}                         % TOC formatting
+\RequirePackage{enumitem}                         % Lists
+\RequirePackage{caption}                          % Captions
+\RequirePackage{csquotes}                         % Quotes (works with biblatex+babel)
+\RequirePackage{indentfirst}                      % Indent first paragraph after headings
+\RequirePackage[main=english,ukrainian]{babel}    % Languages (before biblatex)
+\RequirePackage{siunitx}                          % Units and numbers
+\sisetup{
+  separate-uncertainty = true,
+  per-mode             = symbol,
+  range-units          = brackets,
+  range-open-bracket   = [,
+  range-close-bracket  = ],
+  range-phrase         = {,\;},
+}\RequirePackage[
+  acronym,
+  nopostdot,
+  nogroupskip,
+  style=long
+]{glossaries}                                     % Acronyms and glossaries
+\RequirePackage[
+  backend=biber,
+  style=numeric,
+  sorting=nty,
+  autolang=other
+]{biblatex}
+
+\RequirePackage{refcount}                         % For math with page numbers
+\RequirePackage{lastpage}                         % For total page count
+\RequirePackage{totcount}                         % For total figures/references count
+\RequirePackage{pdfpages}                         % For including PDF pages
+\RequirePackage{etoolbox}                         % For patching commands
+
+\usetikzlibrary{shapes.geometric, arrows, positioning, calc, fit, arrows.meta, backgrounds}
+\sisetup{
+  mode                 = match,
+  propagate-math-font  = true,
+  reset-math-version   = false,
+  reset-text-family    = false,
+  reset-text-series    = false,
+  separate-uncertainty = true,
+  per-mode             = symbol,
+  range-units          = single,
+  range-phrase         = { to },
+  product-symbol       = \ensuremath{\times},
+  inter-unit-product   = \ensuremath{\cdot},
+}
+
+% ==================== GLOSSARY CONFIG ====================
+\makenoidxglossaries
+\setacronymstyle{long-short}
+
+% Total counts configuration
+\regtotcounter{figure}
+\newcounter{totalfigures}
+\regtotcounter{totalfigures}
+\AtBeginEnvironment{figure}{\stepcounter{totalfigures}}
+\newcounter{totaltables}
+\regtotcounter{totaltables}
+\AtBeginEnvironment{table}{\stepcounter{totaltables}}
+
+\newcounter{totalbibentries}
+\regtotcounter{totalbibentries}
+\AtEveryBibitem{\stepcounter{totalbibentries}}
+
+% Custom glossary style: left-aligned with bold abbreviations on same line
+\newglossarystyle{boldacronym}{%
+  \setglossarystyle{long}% base on long style
+  \renewenvironment{theglossary}%
+    {\begin{description}%
+      [leftmargin=2.5cm, labelindent=0pt, labelwidth=2.3cm, labelsep=0.2cm,%
+      style=sameline]}%
+    {\end{description}}%
+  \renewcommand*{\glossentry}[2]{%
+    \item[{\fontsize{15pt}{18pt}\selectfont\textbf{\glsentryshort{##1}}}]%
+    \glsentrylong{##1}, ##2%
+  }%
+}
+
+% ==================== GLOBAL CONFIG ====================
+% Font: Times New Roman only
+\defaultfontfeatures{Ligatures=TeX}
+\setmainfont{Times New Roman}
+
+% Body: real 14pt, 1.5 spacing, first-line indent 1.27 cm
+\makeatletter
+\renewcommand\normalsize{\@setfontsize\normalsize{14pt}{21pt}}
+\makeatother
+\AtBeginDocument{\normalsize}
+\onehalfspacing
+\setlength{\parindent}{1.27cm}
+\setlength{\parskip}{0pt}
+\emergencystretch=2em % soften occasional overfull lines
+
+% Geometry
+\geometry{a4paper,left=25mm,right=15mm,top=15mm,bottom=15mm}
+
+% Hyperref
+\hypersetup{hidelinks}
+
+% ==================== HEADINGS ====================
+% Use arabic numbers internally; print "РОЗДІЛ <n>." as the section label
+\renewcommand\thesection{\arabic{section}}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+% Section: centered, bold 16pt, "CHAPTER <n>."
+\titleformat{\section}[block]
+  {\filcenter\bfseries\fontsize{16pt}{24pt}\selectfont}
+  {CHAPTER~\thesection.}
+  {0.5em}
+  {\MakeUppercase}
+\titlespacing*{\section}{0pt}{20pt}{6pt}
+
+% Subsection: bold 14pt, indented like main text
+\titleformat{\subsection}
+  {\bfseries\fontsize{14pt}{21pt}\selectfont}
+  {\thesubsection.}{0.5em}{}
+\titlespacing*{\subsection}{1.27cm}{6pt}{6pt}
+
+% Subsubsection: bold+italic 14pt, same indent
+\titleformat{\subsubsection}
+  {\bfseries\itshape\fontsize{14pt}{21pt}\selectfont}
+  {\thesubsubsection.}{0.5em}{}
+\titlespacing*{\subsubsection}{1.27cm}{6pt}{0pt}
+
+% ==================== TOC (РОЗДІЛ <n>. ……… page) ====================
+\contentsmargin{0pt}
+
+% Sections in TOC
+\titlecontents{section}
+  [0pt]
+  {\normalsize\bfseries}                 % <-- no \MakeUppercase here
+  {CHAPTER~\thecontentslabel.\enspace}
+  {}
+  {\titlerule*[.5pc]{.}\bfseries\contentspage}
+  [\addvspace{-0.25\baselineskip}]
+
+% Subsections in TOC
+\titlecontents{subsection}
+  [0.75cm]
+  {\normalsize}
+  {\thecontentslabel.\enspace}
+  {}
+  {\titlerule*[.5pc]{.}\contentspage}
+  [\addvspace{-0.3\baselineskip}]
+
+% Subsubsections in TOC
+\titlecontents{subsubsection}
+  [1.5cm]
+  {\normalsize}
+  {\thecontentslabel.\enspace}
+  {}
+  {\titlerule*[.5pc]{.}\contentspage}
+  [\addvspace{-0.35\baselineskip}]
+
+% ==================== LISTS (per spec) ====================
+\setlist{parsep=0pt, itemsep=0pt, partopsep=0pt, topsep=0pt}
+
+% Marked_List (bullet)
+\setlist[itemize,1]{
+  label=\textbullet,
+  leftmargin=2.49cm,
+  labelindent=0pt,
+  labelwidth=0.84cm,
+  labelsep=0.38cm,
+  align=parleft
+}
+
+% Numbered_List
+\setlist[enumerate,1]{
+  label=\arabic*.,
+  leftmargin=2.54cm,
+  labelindent=0pt,
+  labelwidth=0.33cm,
+  labelsep=0.30cm,
+  align=parleft
+}
+
+% ==================== CAPTIONS ====================
+% 14pt body already; figure centered; table raggedleft
+\captionsetup[figure]{justification=centering,labelfont=bf,textfont={bf,it}}
+\captionsetup[table]{justification=raggedleft,singlelinecheck=false,labelfont=bf,textfont=bf}
+
+% ==================== BIBLIOGRAPHY ====================
+\setlength{\bibhang}{0.75cm}
+\setlength{\biblabelsep}{0.5cm}
+\DeclareFieldFormat{labelnumberwidth}{#1\adddot}
+
+% ==================== HELPERS ====================
+\newenvironment{uaabstract}{%
+  \begin{otherlanguage}{ukrainian}%
+    \section*{АНОТАЦІЯ}\addcontentsline{toc}{section}{АНОТАЦІЯ}%
+    \DeclareSIUnit{\hertz}{Гц}%
+    \crefname{figure}{рис.}{рис.}%
+    \Crefname{figure}{Рисунок}{Рисунки}%
+    \crefname{table}{табл.}{табл.}%
+    \Crefname{table}{Таблиця}{Таблиці}%
+    \crefname{section}{розд.}{розд.}%
+    \Crefname{section}{Розділ}{Розділи}%
+    \crefname{equation}{формула}{формули}%
+    \Crefname{equation}{Формула}{Формули}%
+    \renewcommand{\crefrangeconjunction}{~--~}%
+    \renewcommand{\crefpairconjunction}{ та~}%
+    \renewcommand{\crefmiddleconjunction}{, }%
+    \renewcommand{\creflastconjunction}{ та~}%
+}{%
+  \DeclareSIUnit{\hertz}{Hz}%
+  \par\end{otherlanguage}%
+}
+
+\newenvironment{enabstract}{%
+  \begin{otherlanguage}{english}%
+  \section*{ABSTRACT}\addcontentsline{toc}{section}{ABSTRACT}%
+}{\par\end{otherlanguage}}
