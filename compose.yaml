@@ -1,12 +1,9 @@
 services:
-  latex-builder:
+  bachelor-diploma-thesis-template:
     build:
-      context: ./docker
+      context: .
       dockerfile: Dockerfile
-      args:
-        UID: ${UID:-1000}
-        GID: ${GID:-1000}
-    user: latex
+    user: root
     working_dir: /opt/code
     volumes:
       - .:/opt/code

@@ -13,3 +13,25 @@ repos:
       - id: end-of-file-fixer
       - id: mixed-line-ending
       - id: trailing-whitespace
+
+  # BibTeX formatting with bibtex-tidy
+  - repo: https://github.com/FlamingTempura/bibtex-tidy
+    rev: v1.14.0
+    hooks:
+      - id: bibtex-tidy
+        args:
+          - '--modify'
+          - '--wrap=90'
+          - '--align=1'
+          - '--duplicates'
+          - '--merge=combine'
+          - '--strip-enclosing-braces'
+          - '--sort-fields=author,title,year'
+          - '--tidy-comments'
+          - >-
+            --omit=abstract,address,annote,chapter,crossref,edition,editor,eprint,
+            howpublished,institution,journal,key,month,note,number,organization,pages,
+            publisher,school,series,type,volume,isbn,issn,location,language,nationality,
+            translator,commentary,origdate,origlanguage,origlocation,origpublisher,
+            origtitle,shortauthor,shorteditor,shorttitle,subtitle,urldate,version,file,
+            keywords,archiveprefix,primaryclass,booktitle,langid,copyright,annotation

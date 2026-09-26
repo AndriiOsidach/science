@@ -16,8 +16,14 @@ jobs:
         with:
           scheme: full
           run: |
-            apk add diffutils findutils git make
+            apk add diffutils findutils git make pandoc
             git config --global --add safe.directory "*"
+
+            # --- Install MS core fonts ---
+            apk add fontconfig msttcorefonts-installer
+            update-ms-fonts
+            fc-cache -f -v
+
             make format
       - name: Check if formatted
         run: |
