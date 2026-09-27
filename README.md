@@ -1,6 +1,13 @@
-# Bachelor diploma thesis template
+# NULP Science Practice Works
 
-LaTeX template for a bachelor qualification thesis, with Docker-based builds.
+LaTeX repository for Science Practice Works (Науково-дослідна практика) at National University "Lviv Polytechnic" (NULP), with Docker-based builds.
+
+## Repository structure
+
+- `pws/<id>/` — practical works (PWS) reports (e.g. `pws/1/main.tex`).
+- `docs/` — templates and guideline documents (e.g. `title.docx`).
+- `styles/` — common LaTeX styles and packages (`main.sty`).
+- `scripts/` — helper scripts for title page generation and image processing.
 
 ## Quick start
 
@@ -10,28 +17,25 @@ LaTeX template for a bachelor qualification thesis, with Docker-based builds.
    docker compose build
    ```
 
-2. **Compile the thesis**:
+2. **Compile practice works**:
 
    ```bash
    docker compose run --rm bachelor-diploma-thesis-template make all
    ```
 
-   PDFs are written to `build/pdfs/` (main output: `build/main.pdf`).
+   PDFs are written to `build/pdfs/` (e.g. `build/pdfs/pws-1.pdf`).
+
+   You can also build a specific practical work by its ID:
+
+   ```bash
+   docker compose run --rm bachelor-diploma-thesis-template make pws-1
+   ```
 
 3. **Clean up**:
 
    ```bash
    docker compose run --rm bachelor-diploma-thesis-template make clean
    ```
-
-## Compress images
-
-**Reduce the size of the images in the `figure/` directory**:
-
-```bash
-docker compose run --rm bachelor-diploma-thesis-template make compress
-```
-_The script processes PNG, JPEG, GIF, BMP, and TIFF files under `figure/`. Non-JPEG sources are replaced with `.jpg` files; update `\includegraphics{...}` paths in your `.tex` files if extensions change._
 
 ## Generate title page
 
@@ -55,3 +59,13 @@ Example for practical work #1:
 - `--group <string>`: Group code (default: `КНСШ-11`).
 
 _Note: Requires LibreOffice (`libreoffice` CLI) to convert the modified document to PDF._
+
+## Compress images
+
+**Reduce the size of images**:
+
+```bash
+docker compose run --rm bachelor-diploma-thesis-template make compress
+```
+
+_The script processes PNG, JPEG, GIF, BMP, and TIFF files. Non-JPEG sources are replaced with `.jpg` files; update `\includegraphics{...}` paths in your `.tex` files if extensions change._
