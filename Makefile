@@ -18,10 +18,6 @@ pws-%: pws/%/main.tex | init
 pws/%: pws-%
 	@:
 
-thesis: init
-	latexmk $(LATEXMK_ARGS) src/main.tex
-	$(MAKE) pdfs
-
 pdfs:
 	@mkdir -p $(PDF_OUTPUT_DIR)
 	@chmod 777 $(PDF_OUTPUT_DIR) || true
@@ -43,4 +39,4 @@ compress:
 clean:
 	rm -rf build
 
-.PHONY: all clean compress format pdfs build pws thesis
+.PHONY: all clean compress format pdfs build pws
