@@ -49,10 +49,34 @@
 ]{glossaries}                                     % Acronyms and glossaries
 \RequirePackage[
   backend=biber,
-  style=numeric,
+  style=gost-numeric,
+  blockpunct=space,
+  movenames=true,
   sorting=nty,
   autolang=other
 ]{biblatex}
+
+\DefineBibliographyStrings{ukrainian}{%
+  urlseen = {дата звернення:},
+}
+\DeclareFieldFormat{urldate}{\mkbibparens{\bibstring{urlseen}\addspace#1}}
+
+\DeclareSourcemap{
+  \maps[datatype=bibtex]{
+    \map{
+      \step[fieldsource=title, match=\regexp{^[\x{0400}-\x{04FF}]}, final]
+      \step[fieldset=presort, fieldvalue={a}]
+    }
+    \map{
+      \step[fieldsource=author, match=\regexp{^[\x{0400}-\x{04FF}]}, final]
+      \step[fieldset=presort, fieldvalue={a}]
+    }
+    \map{
+      \step[fieldsource=editor, match=\regexp{^[\x{0400}-\x{04FF}]}, final]
+      \step[fieldset=presort, fieldvalue={a}]
+    }
+  }
+}
 
 \RequirePackage{refcount}                         % For math with page numbers
 \RequirePackage{lastpage}                         % For total page count
@@ -208,10 +232,18 @@
 
 % ==================== CAPTIONS ====================
 % 14pt body already; figure centered; table raggedleft
-\captionsetup[figure]{justification=centering,labelfont=bf,textfont={bf,it}}
-\captionsetup[table]{justification=raggedleft,singlelinecheck=false,labelfont=bf,textfont=bf}
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+\captionsetup[figure]{justification=centering,font={bf,it},labelsep=period}
+\captionsetup[table]{justification=raggedleft,singlelinecheck=false,labelfont=bf,labelsep=period}
 
 % ==================== BIBLIOGRAPHY ====================
+\defbibheading{bibintoc}[\bibname]{%
+  \clearpage
+  \phantomsection
+  \section*{#1}%
+  \addcontentsline{toc}{section}{#1}%
+}
 \setlength{\bibhang}{0.75cm}
 \setlength{\biblabelsep}{0.5cm}
 \DeclareFieldFormat{labelnumberwidth}{#1\adddot}

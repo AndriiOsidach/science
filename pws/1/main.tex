@@ -1,0 +1,163 @@
+\documentclass{article}
+
+\IfFileExists{styles/main.sty}{%
+  \usepackage{styles/main}%
+}{%
+  \usepackage{../../styles/main}%
+}
+
+\usepackage{xurl}
+\usepackage{cleveref}
+
+\IfFileExists{references.bib}{%
+  \addbibresource{references.bib}%
+}{%
+  \addbibresource{pws/1/references.bib}%
+}
+
+\IfFileExists{figures/}{%
+  \graphicspath{{./figures/}}%
+}{%
+  \graphicspath{{./pws/1/figures/}}%
+}
+
+\begin{document}
+
+% ==================== TITLE PAGE ====================
+\IfFileExists{docs/title.pdf}{%
+  \includepdf[pages=-]{docs/title.pdf}%
+}{%
+  \includepdf[pages=-]{pws/1/docs/title.pdf}%
+}
+
+\selectlanguage{ukrainian}
+
+\crefname{figure}{рис.}{рис.}
+\Crefname{figure}{Рисунок}{Рисунки}
+\crefname{table}{табл.}{табл.}
+\Crefname{table}{Таблиця}{Таблиці}
+\crefname{section}{розд.}{розд.}
+\Crefname{section}{Розділ}{Розділи}
+\crefname{equation}{формула}{формули}
+\Crefname{equation}{Формула}{Формули}
+\renewcommand{\crefrangeconjunction}{~--~}
+\renewcommand{\crefpairconjunction}{ та~}
+\renewcommand{\crefmiddleconjunction}{, }
+\renewcommand{\creflastconjunction}{ та~}
+
+\titleformat{\section}[block]
+{\filcenter\bfseries\fontsize{16pt}{24pt}\selectfont}
+{}
+{0pt}
+{\MakeUppercase}
+\titlespacing*{\section}{0pt}{20pt}{6pt}
+
+% ==================== CONTENT ====================
+\section{ПРАКТИЧНА РОБОТА №1}
+
+\textbf{Тема:} Створення облікового запису та наповнення профіля користувача, а також формування рейтингу у Web of Knowledge, Scopus, Google Scholar, ORCID.
+
+\textbf{Мета:} Створити профілі користувача у Web of Knowledge, Scopus, Google Scholar, ORCID. Зрозуміти принципи формування рейтингу у Scopus, Google Scholar.
+
+\subsection{Постановка завдання}
+Створити та наповнити (де це необхідно) профілі користувача у Web of Knowledge, Scopus, Google Scholar, ORCID.
+
+\subsection{Порядок виконання роботи}
+
+\subsubsection{Google Scholar}
+Під час виконання роботи було створено обліковий запис у наукометричній базі даних Google Scholar~\cite{google_scholar} із використанням електронної поштової адреси в домені \mbox{lpnu.ua} (\cref{fig:google_scholar}). У профілі вказано ім'я українською та англійською мовами (Андрій Осідач / Andrii Osidach), зазначено назву університету (Національний університет «Львівська політехніка», кафедра систем штучного інтелекту), завантажено фотографію профілю та додано ключові слова за тематикою наукових інтересів («робототехніка», «системи штучного інтелекту»). Також було підтверджено електронну адресу в домені \mbox{lpnu.ua} та безпосередньо під час реєстрації за допомогою пошуку знайдено і додано власну наукову публікацію «Паралельний метод RANSAC для потокового оброблення даних сенсорів LiDAR».
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.88\linewidth]{google_scholar.jpeg}
+  \caption{Обліковий запис користувача у Google Scholar.}
+  \label{fig:google_scholar}
+\end{figure}
+
+\subsubsection{Web of Knowledge}
+Оскільки реєстрація у пошуковій платформі Web of Knowledge (Web of Science)~\cite{web_of_knowledge} вимагає реєстрації із комп'ютера університету~--- цю процедуру було пропущено.
+
+\subsubsection{Scopus}
+Для роботи з міжнародною наукометричною базою даних Scopus~\cite{scopus} зареєстровано обліковий запис у системі видавництва Elsevier із прив'язкою до корпоративної електронної пошти в домені \mbox{lpnu.ua}. У результаті було успішно активовано інституційний доступ, наданий бібліотекою Національного університету «Львівська політехніка» (\cref{fig:scopus}).
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.88\linewidth]{scopus.jpeg}
+  \caption{Робоче вікно пошуку бази даних Scopus для авторизованого користувача.}
+  \label{fig:scopus}
+\end{figure}
+
+За допомогою форми пошуку авторів (\textit{Authors search}) було здійснено перевірку наявності автоматично згенерованого профілю за прізвищем та ініціалами (Osidach A. / Осідач А.). Оскільки наявна наукова публікація вийшла у фаховому журналі України («Науковий вісник НЛТУ України»), який не індексується базою даних Scopus, персональний профіль Scopus Author ID на цей момент ще не сформовано.
+
+\subsubsection{ORCID}
+У системі ORCID (Open Researcher and Contributor ID)~\cite{orcid} створено, верифіковано та
+зроблено відкритим для загального доступу обліковий запис науковця (\cref{fig:orcid_profile}).
+Отримано унікальний 16-значний цифровий ідентифікатор:
+\begin{center}
+  \textbf{ORCID iD:} \href{https://orcid.org/0009-0004-0194-7391}{0009-0004-0194-7391}
+\end{center}
+
+Під час налаштування облікового запису було заповнено всі основні розділи та атрибути:
+\begin{itemize}
+  \item вказано повне ім'я англійською мовою (\textit{Andrii Osidach});
+  \item підтверджено адреси електронної пошти: персональну та корпоративну скриньку університету (\mbox{andrii.osidach.mknssh.2026@lpnu.ua}), а також верифіковано домен \mbox{lpnu.ua};
+  \item заповнено розділ місця праці (\textit{Employment}): зазначено компанію SoftServe (Austin, Texas, US) та посаду Robotics Engineer (RAAG);
+  \item заповнено розділ освіти та кваліфікації (\textit{Education and qualifications}): вказано Національний університет «Львівська політехніка» (здобуття кваліфікації бакалавра за спеціальністю «Штучний інтелект» у 2022--2026~рр. та поточне навчання в магістратурі з вересня 2026~р.);
+  \item додано ключові слова наукових інтересів (\textit{Keywords}): Robotics, AI;
+  \item у розділі посилань на сайти та соціальні мережі (\textit{Websites \& social links}) додано прямі гіперпосилання на профіль у Google Scholar та на персональну сторінку в соціальній мережі Instagram;
+  \item до розділу публікацій (\textit{Works}) за допомогою цифрового ідентифікатора DOI (\mbox{10.36930/40340314}) додано наукову статтю «Паралельний метод RANSAC для потокового оброблення даних сенсорів LiDAR», опубліковану в журналі Scientific Bulletin of UNFU у співавторстві.
+\end{itemize}
+
+Для швидкого переходу до облікового запису ORCID згенеровано QR-код (\cref{fig:orcid_qr}).
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.75\linewidth]{orcid_profile.jpeg}
+  \caption{Загальний вигляд облікового запису користувача в ORCID.}
+  \label{fig:orcid_profile}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.25\linewidth]{orcid_qr.png}
+  \caption{QR-код для переходу до профілю ORCID.}
+  \label{fig:orcid_qr}
+\end{figure}
+
+\clearpage
+\subsection{Висновок}
+Під час виконання практичної роботи було опановано засоби створення та наповнення профілів науковця у провідних наукометричних платформах та реєстрах ідентифікаторів: Google Scholar~\cite{google_scholar}, Scopus~\cite{scopus} та ORCID~\cite{orcid}.
+
+\textbf{Що було зроблено:}
+\begin{itemize}
+  \item Створено, верифіковано за університетською поштою в домені \mbox{lpnu.ua} та наповнено всіма обов'язковими атрибутами профіль у Google Scholar. До профілю додано публікацію, фотографію, ключові слова наукових досліджень та зазначено академічну афіліацію.
+  \item Зареєстровано обліковий запис у системі Scopus (Elsevier) з підтвердженням інституційного доступу за передплатою Національного університету «Львівська політехніка». Виконано пошук автора за ПІБ для перевірки формування авторського профілю Scopus Author ID.
+  \item Створено та повністю наповнено відкритий обліковий запис у системі ORCID (ідентифікатор \href{https://orcid.org/0009-0004-0194-7391}{0009-0004-0194-7391}). Вказано відомості про освіту, місце роботи, наукові зацікавлення, додано посилання на Google Scholar і соціальні мережі, а також за допомогою DOI долучено власну наукову статтю.
+  \item Досліджено специфіку доступу до аналітичної платформи Web of Knowledge (Web of Science).
+\end{itemize}
+
+Створення облікових записів у наукометричних базах вирішує критично важливу задачу однозначної ідентифікації дослідника у світовій науковій спільноті, усуваючи неоднозначності, пов'язані з різними варіантами транслітерації імені або наявністю однофамільців. Об'єднання профілю ORCID із Google Scholar формує цілісну академічну візитівку вченого, робить результати власних досліджень видимими для міжнародної спільноти, спрощує пошук співавторів та дозволяє об'єктивно оцінювати науковий рейтинг (цитування, $h$-індекс), а інституційний доступ до Scopus відкриває широкі можливості для опрацювання наукової літератури при проведенні досліджень.
+
+У \cref{tab:author_profiles} зведено ідентифікатори та активні посилання на створені профілі.
+
+\begin{table}[H]
+  \caption{Мій ідентифікатор ORCID та профіль у Google Scholar.}
+  \label{tab:author_profiles}
+  \centering
+  \begin{tabular}{|c|l|l|}
+    \hline
+    \textbf{№} & \textbf{Наукометрична база / сервіс} & \textbf{Ідентифікатор автора}                                               \\
+    \hline
+    1          & Google Scholar                       & \href{https://scholar.google.com/citations?user=DKb724QAAAAJ}{DKb724QAAAAJ} \\
+    \hline
+    2          & ORCID                                & \href{https://orcid.org/0009-0004-0194-7391}{0009-0004-0194-7391}           \\
+    \hline
+  \end{tabular}
+\end{table}
+
+% ==================== BIBLIOGRAPHY ====================
+\clearpage
+\nocite{*}
+\printbibliography[heading=bibintoc,title={СПИСОК ВИКОРИСТАНИХ ДЖЕРЕЛ}]
+
+\end{document}

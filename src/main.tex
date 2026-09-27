@@ -46,7 +46,6 @@
   вибірки, машинне навчання.
 \end{uaabstract}
 
-
 % ===================== TABLE OF CONTENTS =====================
 \clearpage
 \tableofcontents
@@ -160,13 +159,15 @@ We use Accuracy, Precision, Recall, and F1. An example layout is shown in Table~
   \caption{Comparison of quality metrics for three approaches}
   \label{tab:metrics}
   \centering
-  \begin{tabular}{lccc}
+  \begin{tabular}{|l|c|c|c|}
     \hline
-    Method    & Precision & Recall & F1   \\
+    Method   & Precision & Recall & F1   \\
     \hline
-    Baseline  & 0.84      & 0.81   & 0.82 \\
-    PNN+SVM   & 0.89      & 0.87   & 0.88 \\
-    PNN+RF    & 0.90      & 0.88   & 0.89 \\
+    Baseline & 0.84      & 0.81   & 0.82 \\
+    \hline
+    PNN+SVM  & 0.89      & 0.87   & 0.88 \\
+    \hline
+    PNN+RF   & 0.90      & 0.88   & 0.89 \\
     \hline
   \end{tabular}
 \end{table}
@@ -217,6 +218,7 @@ A reproducible experimentation pipeline was developed; a comparative analysis wa
 practical recommendations for model and hyperparameter selection were formulated.
 
 % ===================== BIBLIOGRAPHY =====================
+\clearpage
 \printbibliography[heading=bibintoc,title={REFERENCES}]
 
 % ===================== APPENDICES =====================

@@ -2,9 +2,23 @@ LATEXINDENT_ARGS=-w -l -s -c build -m -r
 LATEXMK_ARGS=-halt-on-error -time -xelatex -outdir=build -shell-escape
 PDF_OUTPUT_DIR=build/pdfs
 
+PWS_SRCS=$(sort $(wildcard pws/*/main.tex))
+PWS_TARGETS=$(patsubst pws/%/main.tex,pws-%,$(PWS_SRCS))
+
 all: build
 
-build: init
+build: init $(PWS_TARGETS)
+	$(MAKE) pdfs
+
+pws: build
+
+pws-%: pws/%/main.tex | init
+	latexmk $(LATEXMK_ARGS) -jobname=pws-$* $<
+
+pws/%: pws-%
+	@:
+
+thesis: init
 	latexmk $(LATEXMK_ARGS) src/main.tex
 	$(MAKE) pdfs
 
@@ -13,6 +27,7 @@ pdfs:
 	@chmod 777 $(PDF_OUTPUT_DIR) || true
 	@find build/ -maxdepth 1 -name "*.pdf" -exec cp {} $(PDF_OUTPUT_DIR) \;
 	@find $(PDF_OUTPUT_DIR) -maxdepth 1 -name "*.pdf" -exec chmod 666 {} \;
+	@chmod -R 777 build 2>/dev/null || true
 	@echo "All PDFs copied to $(PDF_OUTPUT_DIR)"
 
 init:
@@ -28,4 +43,4 @@ compress:
 clean:
 	rm -rf build
 
-.PHONY: all clean compress format pdfs build
+.PHONY: all clean compress format pdfs build pws thesis
