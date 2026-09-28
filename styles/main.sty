@@ -61,6 +61,11 @@
 }
 \DeclareFieldFormat{urldate}{\mkbibparens{\bibstring{urlseen}\addspace#1}}
 
+\setcounter{biburllcpenalty}{7000}
+\setcounter{biburlucpenalty}{8000}
+\setcounter{biburlnumpenalty}{9000}
+\biburlbigskip=0mu\relax
+
 \DeclareSourcemap{
   \maps[datatype=bibtex]{
     \map{
@@ -150,6 +155,12 @@
 
 % Hyperref
 \hypersetup{hidelinks}
+\urlstyle{same}
+\AtBeginDocument{%
+  \urlstyle{same}%
+  \Urlmuskip=0mu\relax
+  \biburlbigskip=0mu\relax
+}
 
 % ==================== HEADINGS ====================
 % Use arabic numbers internally; print "РОЗДІЛ <n>." as the section label
