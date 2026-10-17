@@ -2,7 +2,9 @@
 
 % ==================== OPTIONS ====================
 \newif\ifmainapa
+\newif\ifmainvancouver
 \DeclareOption{apa}{\mainapatrue}
+\DeclareOption{vancouver}{\mainvancouvertrue}
 \DeclareOption*{\PassOptionsToPackage{\CurrentOption}{biblatex}}
 \ProcessOptions\relax
 
@@ -61,6 +63,156 @@
 \DeclareLanguageMapping{ukrainian}{english-apa}
 \let\cite\parencite
 \let\cites\parencites
+\else\ifmainvancouver
+\RequirePackage[
+  backend=biber,
+  style=vancouver,
+  sorting=none,
+  autolang=other,
+  maxbibnames=6,
+  minbibnames=6
+]{biblatex}
+
+\DeclareLanguageMapping{ukrainian}{english}
+
+% Clean up shortmonth to avoid spurious whitespace
+\renewcommand*{\shortmonth}[1]{%
+  \ifthenelse{\NOT\equal{#1}{}}{%
+    \ifcase#1\relax
+    \or Jan%
+    \or Feb%
+    \or Mar%
+    \or Apr%
+    \or May%
+    \or Jun%
+    \or Jul%
+    \or Aug%
+    \or Sep%
+    \or Oct%
+    \or Nov%
+    \or Dec%
+    \fi%
+  }{}%
+}
+
+% In Zotero (Word connector), Vancouver uses parenthetical numeric citations: (1), (2), etc.
+\DeclareCiteCommand{\cite}[\mkbibparens]
+  {\usebibmacro{prenote}}
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+\DeclareCiteCommand{\parencite}[\mkbibparens]
+  {\usebibmacro{prenote}}
+  {\usebibmacro{citeindex}%
+   \usebibmacro{cite}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+
+% No "and" before the last author (Vancouver standard / Zotero CSL)
+\DeclareDelimFormat{finalnamedelim}{\addcomma\space}
+
+% In: for book chapters and conference proceedings
+\renewbibmacro{in:}{%
+  \ifentrytype{article}{}{%
+    \printtext{\bibstring{in}\addcolon\space}%
+  }%
+}
+
+% Fix volume + number: 18(5)
+\renewbibmacro*{volume+number+eid}{%
+  \printfield{volume}%
+  \iffieldundef{number}{}{%
+    \printtext[parens]{\printfield{number}}%
+  }%
+  \printfield{eid}%
+}
+
+% Formatting for journal title and volume/issue: Symmetry. 2026 May;18(5):768.
+\renewbibmacro*{journal}{%
+  \iffieldundef{journaltitle}
+    {}
+    {\printtext[journaltitle]{%
+       \printfield[titlecase]{journaltitle}%
+     }%
+     \adddot%
+    }%
+}
+
+\renewbibmacro*{journal+issuetitle}{%
+  \usebibmacro{journal}%
+  \iffieldundef{series}{}{%
+    \newunit\printfield{series}%
+  }%
+  \setunit*{\addspace}%
+  \usebibmacro{issue+date}%
+  \setunit*{\addsemicolon}%
+  \usebibmacro{volume+number+eid}%
+  \usebibmacro{issue}%
+  \newunit%
+}
+
+% Date format: articles have year + month; inproceedings / books have year only
+\DeclareFieldFormat*{date}{%
+  \thefield{year}%
+  \ifentrytype{article}{%
+    \iffieldundef{month}{}{%
+      \addspace\shortmonth{\thefield{month}}%
+    }%
+    \iffieldundef{day}{}{%
+      \addspace\thefield{day}%
+    }%
+  }{}%
+  \isdot%
+}
+
+% [cited ...] placed immediately after date for entries without DOI
+\newbibmacro*{vancouver:urldate}{%
+  \iffieldundef{doi}{%
+    \iffieldundef{urlyear}{}{%
+      \setunit{\addspace}%
+      \printtext{%
+        {[}cited \thefield{urlyear}\addspace%
+        \shortmonth{\thefield{urlmonth}}\addspace%
+        \thefield{urlday}{]}%
+      }%
+    }%
+  }{}%
+}
+
+\renewbibmacro*{date}{%
+  \printdate%
+  \usebibmacro{vancouver:urldate}%
+}
+
+% Drop urldate from the end of the entry (after URL)
+\DeclareFieldFormat*{urldate}{}
+\renewbibmacro*{urldate}{}
+
+% Publisher and location formatting in Vancouver: Location: Publisher; Year.
+\renewbibmacro*{publisher+location+date}{%
+  \printlist{location}%
+  \iflistundef{publisher}
+    {\setunit*{\addcomma\space}}
+    {\setunit*{\addcolon\space}}%
+  \printlist{publisher}%
+  \setunit*{\addsemicolon\space}%
+  \usebibmacro{date}%
+  \newunit}
+
+% Pages formatting: colon for articles, p. for inproceedings / books
+\DeclareFieldFormat*[article]{pages}{:\mkcomprange{#1}}
+\DeclareFieldFormat*[inproceedings,incollection,book]{pages}{p\adddot\addspace\mkcomprange{#1}}
+
+% Fix bibpagespunct: empty for articles, period + space for others
+\renewcommand*{\bibpagespunct}{%
+  \ifentrytype{article}{}{\adddot\addspace}%
+}
+
+% DOI format matching Zotero: doi:10.xxx
+\DeclareFieldFormat{doi}{%
+  doi:\ifhyperref{\href{https://doi.org/#1}{\nolinkurl{#1}}}{\nolinkurl{#1}}%
+}
 \else
 \RequirePackage[
   backend=biber,
@@ -92,7 +244,7 @@
     }
   }
 }
-\fi
+\fi\fi
 
 \setcounter{biburllcpenalty}{7000}
 \setcounter{biburlucpenalty}{8000}
