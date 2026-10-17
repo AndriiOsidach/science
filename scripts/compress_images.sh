@@ -5,7 +5,19 @@
 
 set -e  # Exit on error
 
-FIGURE_DIR="$(dirname "$0")/../figure"
+if [ -n "$1" ]; then
+    FIGURE_DIR="$1"
+elif [ -d "pws/2/figures" ]; then
+    FIGURE_DIR="pws/2/figures"
+elif [ -d "$(dirname "$0")/../pws/2/figures" ]; then
+    FIGURE_DIR="$(dirname "$0")/../pws/2/figures"
+elif [ -d "$(dirname "$0")/../figure" ]; then
+    FIGURE_DIR="$(dirname "$0")/../figure"
+elif [ -d "$(dirname "$0")/../figures" ]; then
+    FIGURE_DIR="$(dirname "$0")/../figures"
+else
+    FIGURE_DIR="$(dirname "$0")/../figure"
+fi
 MAX_SIZE_KB=100
 MAX_SIZE_BYTES=$((MAX_SIZE_KB * 1024))
 
@@ -16,11 +28,16 @@ if ! command -v convert &> /dev/null && ! command -v magick &> /dev/null; then
     exit 1
 fi
 
-# Use 'magick' if available (newer ImageMagick), otherwise 'convert'
-if command -v magick &> /dev/null; then
+# Use 'magick' if ImageMagick 7 is available, otherwise 'convert'
+if command -v magick &> /dev/null && magick -version 2>&1 | grep -q "ImageMagick 7"; then
     CONVERT_CMD="magick"
-else
+    IDENTIFY_CMD="magick identify"
+elif command -v convert &> /dev/null; then
     CONVERT_CMD="convert"
+    IDENTIFY_CMD="identify"
+elif command -v magick &> /dev/null; then
+    CONVERT_CMD="magick"
+    IDENTIFY_CMD="identify"
 fi
 
 # Check if figure directory exists
@@ -104,11 +121,7 @@ find "$FIGURE_DIR" -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg
                     echo "  Warning: Quality reduction not enough, attempting resize..."
 
                     # Get image dimensions
-                    if [ "$CONVERT_CMD" = "magick" ]; then
-                        dimensions=$($CONVERT_CMD identify -format "%wx%h" "$image_file" 2>/dev/null)
-                    else
-                        dimensions=$(identify -format "%wx%h" "$image_file" 2>/dev/null)
-                    fi
+                    dimensions=$($IDENTIFY_CMD -format "%wx%h" "$image_file" 2>/dev/null)
 
                     width=$(echo "$dimensions" | cut -d'x' -f1)
                     height=$(echo "$dimensions" | cut -d'x' -f2)
