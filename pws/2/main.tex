@@ -116,34 +116,42 @@
 
 Відповідно до порядку виконання практичної роботи, спочатку було застосовано стиль оформлення цитувань і бібліографії APA 7\textsuperscript{th} edition (\textit{American Psychological Association, 7\textsuperscript{th} edition}). Оскільки робота та науковий текст готуються у \LaTeX{}, процес стилізації реалізовано шляхом експорту сформованої колекції публікацій із менеджера Zotero у форматі BibLaTeX (\texttt{.bib}). Для автоматичного форматування бібліографічної інформації було використано пакет \texttt{biblatex} із бекендом \texttt{biber} та стилем \texttt{style=apa}. Цитування безпосередньо у тексті подаються у круглих дужках за схемою «(Автор, рік)» (\cref{fig:apa_text}). Згенерований список використаних джерел (\cref{fig:apa_refs}) повністю відповідає правилам стандарту APA: джерела автоматично відсортовано в алфавітному порядку за прізвищами перших авторів із формуванням висячого відступу (\textit{hanging indent}), виділенням назв журналів та номерів томів курсивом, а також наведенням повних цифрових ідентифікаторів DOI у формі гіперпосилань.
 
-\begin{figure}[h]
+\begin{figure}[!ht]
   \centering
-  \fbox{\includegraphics[width=0.75\linewidth]{apa_text.jpg}}
-  \caption{Фрагмент тексту з оформленням цитувань за стандартом APA 7\textsuperscript{th} edition.}
-  \label{fig:apa_text}
-\end{figure}
-
-\begin{figure}[h]
-  \centering
-  \fbox{\includegraphics[width=0.75\linewidth]{apa_refs.jpg}}
-  \caption{Автоматично згенерований список використаних джерел за вимогами стандарту APA 7\textsuperscript{th} edition.}
-  \label{fig:apa_refs}
+  \begin{minipage}[t]{0.48\linewidth}
+    \vspace{0pt}
+    \centering
+    \fbox{\includegraphics[height=9cm,keepaspectratio]{apa_text.jpg}}
+    \caption{Фрагмент тексту з оформленням цитувань за стандартом APA 7\textsuperscript{th} edition.}
+    \label{fig:apa_text}
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.48\linewidth}
+    \vspace{0pt}
+    \centering
+    \fbox{\includegraphics[height=9cm,keepaspectratio]{apa_refs.jpg}}
+    \caption{Автоматично згенерований список використаних джерел за вимогами стандарту APA 7\textsuperscript{th} edition.}
+    \label{fig:apa_refs}
+  \end{minipage}
 \end{figure}
 
 Надалі, відповідно до завдання, стиль оформлення було змінено на Vancouver (\textit{Vancouver style}). У цьому стилі замість схеми «(Автор, рік)» використовуються числові посилання у круглих дужках у порядку їх появи в тексті (\cref{fig:vancouver_text}). Список використаних джерел впорядковується не за алфавітом, а за черговістю цитування джерел, де кожен запис нумерується та оформлюється відповідно до правил стандарту Vancouver (\cref{fig:vancouver_refs}).
 
-\begin{figure}[h]
+\begin{figure}[!ht]
   \centering
-  \fbox{\includegraphics[width=0.75\linewidth]{vancouver_text.jpg}}
-  \caption{Фрагмент тексту з оформленням цитувань за стандартом Vancouver.}
-  \label{fig:vancouver_text}
-\end{figure}
-
-\begin{figure}[h]
-  \centering
-  \fbox{\includegraphics[width=0.75\linewidth]{vancouver_refs.jpg}}
-  \caption{Автоматично згенерований список використаних джерел за вимогами стандарту Vancouver.}
-  \label{fig:vancouver_refs}
+  \begin{minipage}[t]{0.48\linewidth}
+    \vspace{0pt}
+    \centering
+    \fbox{\includegraphics[height=9cm,keepaspectratio]{vancouver_text.jpg}}
+    \caption{Фрагмент тексту з оформленням цитувань за стандартом Vancouver.}
+    \label{fig:vancouver_text}
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.48\linewidth}
+    \vspace{0pt}
+    \centering
+    \fbox{\includegraphics[height=9cm,keepaspectratio]{vancouver_refs.jpg}}
+    \caption{Автоматично згенерований список використаних джерел за вимогами стандарту Vancouver.}
+    \label{fig:vancouver_refs}
+  \end{minipage}
 \end{figure}
 
 % ==================== BIBLIOGRAPHY ====================
