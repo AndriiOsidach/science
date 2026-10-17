@@ -45,6 +45,9 @@
 \renewcommand{\crefmiddleconjunction}{, }
 \renewcommand{\creflastconjunction}{ та~}
 
+\setlength{\fboxsep}{0pt}
+\setlength{\fboxrule}{0.5pt}
+
 \titleformat{\section}[block]
 {\filcenter\bfseries\fontsize{16pt}{24pt}\selectfont}
 {}
@@ -81,14 +84,14 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.88\linewidth]{web_zotero.jpg}
+  \fbox{\includegraphics[width=0.88\linewidth]{web_zotero.jpg}}
   \caption{Веб-інтерфейс бібліотеки користувача у бібліографічному менеджері Zotero.}
   \label{fig:web_zotero}
 \end{figure}
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.88\linewidth]{local_zotero.jpg}
+  \fbox{\includegraphics[width=0.88\linewidth]{local_zotero.jpg}}
   \caption{Робоче вікно десктопної версії програми Zotero у середовищі Linux.}
   \label{fig:local_zotero}
 \end{figure}
@@ -102,12 +105,30 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.88\linewidth]{manual_ceus-ws.png}
+  \fbox{\includegraphics[width=0.88\linewidth]{manual_ceus-ws.jpg}}
   \caption{Ручне додавання бібліографічного джерела без DOI (CEUR-WS.org) у десктопній версії програми Zotero.}
   \label{fig:manual_ceus_ws}
 \end{figure}
 
 Два інші джерела з міжнародних баз IEEE та PubMed були додані за допомогою вбудованої функції десктопної версії Zotero «Add Item(s) by Identifier» шляхом введення їхніх цифрових ідентифікаторів DOI. У такий спосіб було імпортовано матеріали виступу на конференції IEEE ICRA 2025~\cite{longLearningHumanoidLocomotion2025} та статтю у науковому журналі \textit{Research}, проіндексовану у базі даних PubMed~\cite{luDeepReinforcementLearning2026}. Бібліографічний менеджер автоматично виконав онлайн-запит до глобальних реєстрів ідентифікаторів, імпортував структуровані метадані публікацій та завантажив пов'язані електронні копії у персональне сховище.
+
+\subsubsection{Стилізація цитувань і бібліографії}
+
+Відповідно до порядку виконання практичної роботи, спочатку було застосовано стиль оформлення цитувань і бібліографії APA 7\textsuperscript{th} edition (\textit{American Psychological Association, 7\textsuperscript{th} edition}). Оскільки робота та науковий текст готуються у \LaTeX{}, процес стилізації реалізовано шляхом експорту сформованої колекції публікацій із менеджера Zotero у форматі BibLaTeX (\texttt{.bib}). Для автоматичного форматування бібліографічної інформації було використано пакет \texttt{biblatex} із бекендом \texttt{biber} та стилем \texttt{style=apa}. Цитування безпосередньо у тексті подаються у круглих дужках за схемою «(Автор, рік)» (\cref{fig:apa_text}). Згенерований список використаних джерел (\cref{fig:apa_refs}) повністю відповідає правилам стандарту APA: джерела автоматично відсортовано в алфавітному порядку за прізвищами перших авторів із формуванням висячого відступу (\textit{hanging indent}), виділенням назв журналів та номерів томів курсивом, а також наведенням повних цифрових ідентифікаторів DOI у формі гіперпосилань.
+
+\begin{figure}[h]
+  \centering
+  \fbox{\includegraphics[width=0.75\linewidth]{apa_text.jpg}}
+  \caption{Фрагмент тексту з оформленням цитувань за стандартом APA 7\textsuperscript{th} edition.}
+  \label{fig:apa_text}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \fbox{\includegraphics[width=0.75\linewidth]{apa_refs.jpg}}
+  \caption{Автоматично згенерований список використаних джерел за вимогами стандарту APA 7\textsuperscript{th} edition.}
+  \label{fig:apa_refs}
+\end{figure}
 
 % ==================== BIBLIOGRAPHY ====================
 \clearpage
