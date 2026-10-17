@@ -18,37 +18,31 @@ def generate_title(pws_id: str, input_path: str = "docs/title.docx", out_dir: st
                    name: str = "Осідач Андрій Богданович", group: str = "КНСШ-11") -> str:
     # Resolve repository root
     repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-    
+
     if not os.path.isabs(input_path):
         input_path = os.path.join(repo_root, input_path)
-    
+
     if not os.path.exists(input_path):
         raise FileNotFoundError(f"Template document not found at: {input_path}")
-    
+
     if out_dir is None:
         out_dir = os.path.join(repo_root, "pws", str(pws_id), "docs")
     elif not os.path.isabs(out_dir):
         out_dir = os.path.join(repo_root, out_dir)
-        
+
     os.makedirs(out_dir, exist_ok=True)
     dest_pdf = os.path.join(out_dir, "title.pdf")
 
     with tempfile.TemporaryDirectory() as tmpdir:
         temp_docx = os.path.join(tmpdir, "title.docx")
-        
+
         with zipfile.ZipFile(input_path, "r") as zin:
             with zipfile.ZipFile(temp_docx, "w", compression=zipfile.ZIP_DEFLATED) as zout:
                 for item in zin.infolist():
                     data = zin.read(item.filename)
                     if item.filename == "word/document.xml":
                         xml_str = data.decode("utf-8")
-                        # 1. Replace practice work number (two ?? near №, ensuring №<id> without space)
-                        xml_str = re.sub(r"№\s+", "№", xml_str)
-                        xml_str = re.sub(
-                            r"(№</w:t></w:r>)\s*<w:r[^>]*>(?:<w:rPr>[\s\S]*?</w:rPr>)?<w:t[^>]*>\s+</w:t></w:r>",
-                            r"\1",
-                            xml_str,
-                        )
+                        # 1. Replace practice work number (two ?? near №, ensuring № <id> with space)
                         xml_str = re.sub(r"(<w:t[^>]*>)\s*\?\?\s*(</w:t>)", rf"\g<1>{pws_id}\g<2>", xml_str)
                         # 2. Replace group (КНСШ-1? -> КНСШ-11)
                         xml_str = re.sub(r"(<w:t[^>]*>)\?(</w:t>)", r"\g<1>1\g<2>", xml_str)
