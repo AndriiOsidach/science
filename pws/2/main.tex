@@ -1,0 +1,65 @@
+\documentclass{article}
+
+\IfFileExists{styles/main.sty}{%
+  \usepackage{styles/main}%
+}{%
+  \usepackage{../../styles/main}%
+}
+
+\usepackage{xurl}
+\usepackage{cleveref}
+
+\IfFileExists{references.bib}{%
+  \addbibresource{references.bib}%
+}{%
+  \addbibresource{pws/2/references.bib}%
+}
+
+\IfFileExists{figures/}{%
+  \graphicspath{{./figures/}}%
+}{%
+  \graphicspath{{./pws/2/figures/}}%
+}
+
+\begin{document}
+
+% ==================== TITLE PAGE ====================
+\IfFileExists{docs/title.pdf}{%
+  \includepdf[pages=-]{docs/title.pdf}%
+}{%
+  \includepdf[pages=-]{pws/2/docs/title.pdf}%
+}
+
+\selectlanguage{ukrainian}
+
+\crefname{figure}{рис.}{рис.}
+\Crefname{figure}{Рисунок}{Рисунки}
+\crefname{table}{табл.}{табл.}
+\Crefname{table}{Таблиця}{Таблиці}
+\crefname{section}{розд.}{розд.}
+\Crefname{section}{Розділ}{Розділи}
+\crefname{equation}{формула}{формули}
+\Crefname{equation}{Формула}{Формули}
+\renewcommand{\crefrangeconjunction}{~--~}
+\renewcommand{\crefpairconjunction}{ та~}
+\renewcommand{\crefmiddleconjunction}{, }
+\renewcommand{\creflastconjunction}{ та~}
+
+\titleformat{\section}[block]
+{\filcenter\bfseries\fontsize{16pt}{24pt}\selectfont}
+{}
+{0pt}
+{\MakeUppercase}
+\titlespacing*{\section}{0pt}{20pt}{6pt}
+
+% ==================== CONTENT ====================
+\section{ПРАКТИЧНА РОБОТА №2}
+
+\textbf{Тема:} Оформлення списку літератури з використанням систем управління бібліографічною інформацією.
+
+\textbf{Мета:} Встановити, налаштувати та навчитися використовувати безкоштовний бібліографічний менеджер Zotero для оформлення списку літератури у наукових роботах.
+
+\subsection{Постановка завдання}
+Інсталювати бібліографічний менеджер Zotero, навчитися ефективно його використовувати.
+
+\end{document}
