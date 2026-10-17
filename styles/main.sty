@@ -3,8 +3,13 @@
 % ==================== OPTIONS ====================
 \newif\ifmainapa
 \newif\ifmainvancouver
+\newif\ifmainmdpi
 \DeclareOption{apa}{\mainapatrue}
 \DeclareOption{vancouver}{\mainvancouvertrue}
+\DeclareOption{mdpi}{\mainmdpitrue}
+\DeclareOption{mpdi}{\mainmdpitrue}
+\DeclareOption{MDPI}{\mainmdpitrue}
+\DeclareOption{MPDI}{\mainmdpitrue}
 \DeclareOption*{\PassOptionsToPackage{\CurrentOption}{biblatex}}
 \ProcessOptions\relax
 
@@ -213,6 +218,134 @@
 \DeclareFieldFormat{doi}{%
   doi:\ifhyperref{\href{https://doi.org/#1}{\nolinkurl{#1}}}{\nolinkurl{#1}}%
 }
+\else\ifmainmdpi
+\RequirePackage[
+  backend=biber,
+  style=numeric-comp,
+  sorting=none,
+  autolang=other,
+  maxbibnames=10,
+  minbibnames=10,
+  giveninits=true,
+  isbn=false
+]{biblatex}
+
+\DeclareLanguageMapping{ukrainian}{english}
+
+% Authors format: Surname, I.N.; Surname, I.N.
+\DeclareNameAlias{default}{family-given}
+\DeclareNameAlias{author}{family-given}
+\DeclareNameAlias{editor}{family-given}
+\DeclareDelimFormat{multinamedelim}{\addsemicolon\space}
+\DeclareDelimFormat{finalnamedelim}{\addsemicolon\space}
+\DeclareDelimFormat[bib,biblist]{nametitledelim}{\addspace}
+
+% Titles: plain text with dot
+\DeclareFieldFormat[article,inproceedings,incollection,unpublished]{title}{#1\adddot}
+\DeclareFieldFormat[book]{title}{\mkbibemph{#1}\adddot}
+\DeclareFieldFormat[online]{title}{#1\adddot}
+
+% In: for book chapters and proceedings
+\renewbibmacro{in:}{%
+  \ifentrytype{article}{}{%
+    \printtext{\bibstring{in}\addspace}%
+  }%
+}
+
+% Journal formatting for articles: Symmetry 2026, 18, 768
+\DeclareFieldFormat{journaltitle}{\mkbibemph{#1}}
+
+\renewbibmacro*{journal+issuetitle}{%
+  \usebibmacro{journal}%
+  \setunit*{\addspace}%
+  \printtext[bold]{\thefield{year}}%
+  \iffieldundef{volume}{}{%
+    \setunit*{\addcomma\space}%
+    \printtext[italic]{\printfield{volume}}%
+  }%
+  \iffieldundef{pages}{%
+    \iffieldundef{eid}{}{%
+      \setunit*{\addcomma\space}%
+      \printfield{eid}%
+    }%
+  }{%
+    \setunit*{\addcomma\space}%
+    \printfield{pages}%
+  }%
+  \newunit%
+}
+
+\DeclareFieldFormat[article]{pages}{\mkcomprange{#1}}
+\DeclareFieldFormat[inproceedings,incollection,book]{pages}{pp\adddot\addspace\mkcomprange{#1}}
+
+% Suppress default note+pages in article so pages aren't duplicated
+\renewbibmacro*{note+pages}{%
+  \ifentrytype{article}{}{%
+    \printfield{note}%
+    \setunit{\bibpagespunct}%
+    \printfield{pages}%
+    \newunit%
+  }%
+}
+
+% Publisher and location formatting
+\renewbibmacro*{publisher+location+date}{%
+  \iflistundef{publisher}{%
+    \printlist{location}%
+    \setunit*{\addcomma\space}%
+    \printfield{year}%
+  }{%
+    \printlist{publisher}%
+    \iflistundef{location}{}{%
+      \setunit*{\addcolon\space}%
+      \printlist{location}%
+    }%
+    \setunit*{\addcomma\space}%
+    \printfield{year}%
+  }%
+  \newunit%
+}
+
+% Month helper for accessed date
+\newcommand*{\mdpimonth}[1]{%
+  \ifcase#1\relax
+  \or January\or February\or March\or April\or May\or June%
+  \or July\or August\or September\or October\or November\or December\fi%
+}
+
+% DOI format matching MDPI: , doi:10.xxx
+\DeclareFieldFormat{doi}{%
+  doi:\ifhyperref{\href{https://doi.org/#1}{\nolinkurl{#1}}}{\nolinkurl{#1}}%
+}
+
+\renewbibmacro*{doi+eprint+url}{%
+  \iftoggle{bbx:doi}{%
+    \iffieldundef{doi}{}{%
+      \setunit{\addcomma\space}%
+      \printfield{doi}%
+    }%
+  }{}%
+  \iffieldundef{doi}{%
+    \usebibmacro{url+urldate}%
+  }{}%
+}
+
+% URL format for MDPI: Available online: URL (accessed on Day Month Year)
+\renewbibmacro*{url+urldate}{%
+  \iffieldundef{url}{}{%
+    \setunit{\addperiod\space}%
+    \printtext{Available online:\addspace\url{\thefield{url}}}%
+    \iffieldundef{urlyear}{}{%
+      \setunit{\addspace}%
+      \printtext{%
+        (accessed on\addspace%
+        \iffieldundef{urlday}{}{\thefield{urlday}\addspace}%
+        \mdpimonth{\thefield{urlmonth}}\addspace%
+        \thefield{urlyear})%
+      }%
+    }%
+  }%
+}
 \else
 \RequirePackage[
   backend=biber,
@@ -244,7 +377,7 @@
     }
   }
 }
-\fi\fi
+\fi\fi\fi
 
 \setcounter{biburllcpenalty}{7000}
 \setcounter{biburlucpenalty}{8000}
