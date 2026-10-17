@@ -1,5 +1,11 @@
 \ProvidesPackage{main}
 
+% ==================== OPTIONS ====================
+\newif\ifmainapa
+\DeclareOption{apa}{\mainapatrue}
+\DeclareOption*{\PassOptionsToPackage{\CurrentOption}{biblatex}}
+\ProcessOptions\relax
+
 % ==================== REQUIREMENTS ====================
 \RequirePackage{iftex}
 \ifXeTeX\else
@@ -47,6 +53,15 @@
   nogroupskip,
   style=long
 ]{glossaries}                                     % Acronyms and glossaries
+\ifmainapa
+\RequirePackage[
+  backend=biber,
+  style=apa
+]{biblatex}
+\DeclareLanguageMapping{ukrainian}{english-apa}
+\let\cite\parencite
+\let\cites\parencites
+\else
 \RequirePackage[
   backend=biber,
   style=gost-numeric,
@@ -60,11 +75,6 @@
   urlseen = {дата звернення:},
 }
 \DeclareFieldFormat{urldate}{\mkbibparens{\bibstring{urlseen}\addspace#1}}
-
-\setcounter{biburllcpenalty}{7000}
-\setcounter{biburlucpenalty}{8000}
-\setcounter{biburlnumpenalty}{9000}
-\biburlbigskip=0mu\relax
 
 \DeclareSourcemap{
   \maps[datatype=bibtex]{
@@ -82,6 +92,12 @@
     }
   }
 }
+\fi
+
+\setcounter{biburllcpenalty}{7000}
+\setcounter{biburlucpenalty}{8000}
+\setcounter{biburlnumpenalty}{9000}
+\biburlbigskip=0mu\relax
 
 \RequirePackage{refcount}                         % For math with page numbers
 \RequirePackage{lastpage}                         % For total page count
@@ -255,9 +271,11 @@
   \section*{#1}%
   \addcontentsline{toc}{section}{#1}%
 }
-\setlength{\bibhang}{0.75cm}
-\setlength{\biblabelsep}{0.5cm}
-\DeclareFieldFormat{labelnumberwidth}{#1\adddot}
+\ifmainapa\else
+  \setlength{\bibhang}{0.75cm}
+  \setlength{\biblabelsep}{0.5cm}
+  \DeclareFieldFormat{labelnumberwidth}{#1\adddot}
+\fi
 
 % ==================== HELPERS ====================
 \newenvironment{uaabstract}{%
