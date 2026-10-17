@@ -177,16 +177,16 @@
 \titlespacing*{\section}{0pt}{20pt}{6pt}
 
 % Subsection: bold 14pt, indented like main text
-\titleformat{\subsection}
+\titleformat{\subsection}[block]
   {\bfseries\fontsize{14pt}{21pt}\selectfont}
-  {\thesubsection.}{0.5em}{}
-\titlespacing*{\subsection}{1.27cm}{6pt}{6pt}
+  {\hspace*{1.27cm}\thesubsection.}{0.5em}{}
+\titlespacing*{\subsection}{0pt}{6pt}{6pt}
 
 % Subsubsection: bold+italic 14pt, same indent
-\titleformat{\subsubsection}
+\titleformat{\subsubsection}[block]
   {\bfseries\itshape\fontsize{14pt}{21pt}\selectfont}
-  {\thesubsubsection.}{0.5em}{}
-\titlespacing*{\subsubsection}{1.27cm}{6pt}{0pt}
+  {\hspace*{1.27cm}\thesubsubsection.}{0.5em}{}
+\titlespacing*{\subsubsection}{0pt}{6pt}{0pt}
 
 % ==================== TOC (РОЗДІЛ <n>. ……… page) ====================
 \contentsmargin{0pt}

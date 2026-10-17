@@ -26,12 +26,8 @@ repos:
           - '--duplicates'
           - '--merge=combine'
           - '--strip-enclosing-braces'
+          - '--no-escape'
           - '--sort-fields=author,title,year'
           - '--tidy-comments'
           - >-
-            --omit=abstract,address,annote,chapter,crossref,edition,editor,eprint,
-            howpublished,institution,journal,key,month,note,number,organization,pages,
-            publisher,school,series,type,volume,isbn,issn,location,language,nationality,
-            translator,commentary,origdate,origlanguage,origlocation,origpublisher,
-            origtitle,shortauthor,shorteditor,shorttitle,subtitle,urldate,version,file,
-            keywords,archiveprefix,primaryclass,booktitle,langid,copyright,annotation
+            --omit=abstract

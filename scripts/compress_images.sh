@@ -102,8 +102,8 @@ find "$FIGURE_DIR" -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg
             if [ "$file_size" -le "$MAX_SIZE_BYTES" ]; then
                 echo "  ✓ Converted to ${name_without_ext}.jpg (${file_size} bytes, quality: $quality)"
 
-                # If original file was not JPG, remove it
-                if [[ ! "$filename" =~ \.(jpg|jpeg)$ ]]; then
+                # If original file had a different name/extension, remove it
+                if [ "$image_file" != "$output_file" ]; then
                     rm "$image_file"
                     echo "  ✓ Removed original file: $filename"
                 fi
@@ -144,8 +144,8 @@ find "$FIGURE_DIR" -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg
                             if [ "$file_size" -le "$MAX_SIZE_BYTES" ]; then
                                 echo "  ✓ Converted to ${name_without_ext}.jpg (${file_size} bytes, resized to ${scale}%, quality: $min_quality)"
 
-                                # Remove original if not JPG
-                                if [[ ! "$filename" =~ \.(jpg|jpeg)$ ]]; then
+                                # Remove original if different from output
+                                if [ "$image_file" != "$output_file" ]; then
                                     rm "$image_file"
                                     echo "  ✓ Removed original file: $filename"
                                 fi
@@ -166,7 +166,7 @@ find "$FIGURE_DIR" -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg
                         file_size=$(stat -f%z "$temp_file" 2>/dev/null || stat -c%s "$temp_file" 2>/dev/null)
                         echo "  ⚠ Converted to ${name_without_ext}.jpg (${file_size} bytes) - still larger than ${MAX_SIZE_KB} kB"
 
-                        if [[ ! "$filename" =~ \.(jpg|jpeg)$ ]]; then
+                        if [ "$image_file" != "$output_file" ]; then
                             rm "$image_file"
                             echo "  ✓ Removed original file: $filename"
                         fi
