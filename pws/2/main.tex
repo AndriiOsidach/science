@@ -1,9 +1,9 @@
 \documentclass{article}
 
 \IfFileExists{styles/main.sty}{%
-  \usepackage{styles/main}%
+  \usepackage[dstu]{styles/main}%
 }{%
-  \usepackage{../../styles/main}%
+  \usepackage[dstu]{../../styles/main}%
 }
 
 \usepackage{xurl}
@@ -63,7 +63,7 @@
 \textbf{Мета:} Встановити, налаштувати та навчитися використовувати безкоштовний бібліографічний менеджер Zotero для оформлення списку літератури у наукових роботах.
 
 \subsection{Постановка завдання}
-Інсталювати бібліографічний менеджер Zotero, навчитися ефективно його використовувати.
+Інсталювати бібліографічний менеджер Zotero, навчитися ефективно його використовувати~\cite{izonin2026}.
 
 \subsection{Порядок виконання роботи}
 
@@ -184,7 +184,6 @@
 
 % ==================== BIBLIOGRAPHY ====================
 \clearpage
-\nocite{*}
 \printbibliography[heading=bibintoc,title={СПИСОК ВИКОРИСТАНИХ ДЖЕРЕЛ}]
 
 \end{document}

@@ -4,12 +4,15 @@
 \newif\ifmainapa
 \newif\ifmainvancouver
 \newif\ifmainmdpi
+\newif\ifmaindstu
 \DeclareOption{apa}{\mainapatrue}
 \DeclareOption{vancouver}{\mainvancouvertrue}
 \DeclareOption{mdpi}{\mainmdpitrue}
 \DeclareOption{mpdi}{\mainmdpitrue}
 \DeclareOption{MDPI}{\mainmdpitrue}
 \DeclareOption{MPDI}{\mainmdpitrue}
+\DeclareOption{dstu}{\maindstutrue}
+\DeclareOption{DSTU}{\maindstutrue}
 \DeclareOption*{\PassOptionsToPackage{\CurrentOption}{biblatex}}
 \ProcessOptions\relax
 
@@ -346,6 +349,64 @@
     }%
   }%
 }
+\else\ifmaindstu
+\RequirePackage[
+  backend=biber,
+  style=gost-numeric,
+  blockpunct=space,
+  movenames=true,
+  sorting=none,
+  isbn=false,
+  autolang=other
+]{biblatex}
+
+\setlength{\bibitemsep}{0.2\baselineskip}
+
+% Ukrainian heading (author) font: upright, not italics
+\renewcommand*{\mkgostheading}[1]{#1}
+
+% Year only for publication date (suppress month/day in bibliography)
+\AtEveryBibitem{%
+  \clearfield{month}%
+  \clearfield{day}%
+  \clearfield{endmonth}%
+  \clearfield{endday}%
+}
+
+% Standard Ukrainian DSTU format for access date: (дата звернення: DD.MM.YYYY)
+\DeclareFieldFormat{urldate}{\mkbibparens{#1}}
+\newbibmacro*{urldate}{%
+  \iffieldundef{urlyear}
+    {}
+    {\printtext[urldate]{%
+       \bibstring{urlseen}\addspace%
+       \iffieldundef{urlday}{}{\mkdayzeros{\thefield{urlday}}\adddot}%
+       \iffieldundef{urlmonth}{}{\mkmonthzeros{\thefield{urlmonth}}\adddot}%
+       \thefield{urlyear}}}}
+
+\DefineBibliographyStrings{ukrainian}{%
+  urlseen = {дата звернення:},
+}
+\DefineBibliographyStrings{english}{%
+  urlseen = {дата звернення:},
+}
+
+% Suppress URL and urldate when DOI is present
+\renewbibmacro*{doi+eprint+url+note}{%
+  \iftoggle{bbx:doi}
+    {\printfield{doi}}
+    {}%
+  \newunit\newblock
+  \iftoggle{bbx:eprint}
+    {\usebibmacro{eprint}}
+    {}%
+  \newunit\newblock
+  \iffieldundef{doi}{%
+    \usebibmacro{url+urldate+note}%
+  }{%
+    \printfield{note}%
+  }%
+}
 \else
 \RequirePackage[
   backend=biber,
@@ -377,7 +438,7 @@
     }
   }
 }
-\fi\fi\fi
+\fi\fi\fi\fi
 
 \setcounter{biburllcpenalty}{7000}
 \setcounter{biburlucpenalty}{8000}
