@@ -1,0 +1,37 @@
+\documentclass{article}
+
+\IfFileExists{styles/main.sty}{%
+  \usepackage[ieee]{styles/main}%
+}{%
+  \usepackage[ieee]{../../styles/main}%
+}
+
+\usepackage{xurl}
+
+\IfFileExists{references.bib}{%
+  \addbibresource{references.bib}%
+}{%
+  \addbibresource{pws/3/references.bib}%
+}
+
+\begin{document}
+
+\selectlanguage{ukrainian}
+
+\titleformat{\section}[block]
+{\filcenter\bfseries\fontsize{16pt}{24pt}\selectfont}
+{}
+{0pt}
+{\MakeUppercase}
+\titlespacing*{\section}{0pt}{20pt}{6pt}
+
+\clearpage
+\nocite{liAICPGAdaptiveImitated2024,%
+  liReinforcementLearningVersatile2025,%
+  songGaitAdaptivePerceptiveHumanoid2026,%
+  sunDPLDepthOnlyPerceptive2026,%
+  sunLeveragingLargeLanguage2024,%
+  uddinAdaptiveMotionPlanning2026}
+\printbibliography[heading=bibintoc,title={СПИСОК ВИКОРИСТАНИХ ДЖЕРЕЛ}]
+
+\end{document}

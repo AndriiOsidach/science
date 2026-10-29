@@ -1,0 +1,186 @@
+\documentclass{article}
+
+\IfFileExists{styles/main.sty}{%
+  \usepackage[dstu]{styles/main}%
+}{%
+  \usepackage[dstu]{../../styles/main}%
+}
+
+\usepackage{xurl}
+\usepackage{cleveref}
+
+\IfFileExists{references.bib}{%
+  \addbibresource{references.bib}%
+}{%
+  \addbibresource{pws/3/references.bib}%
+}
+
+\IfFileExists{figures/}{%
+  \graphicspath{{./figures/}}%
+}{%
+  \graphicspath{{./pws/3/figures/}}%
+}
+
+\DefineBibliographyStrings{english}{%
+  urlseen = {accessed:},
+}
+
+\begin{document}
+
+% ==================== TITLE PAGE ====================
+\IfFileExists{docs/title.pdf}{%
+  \includepdf[pages=-]{docs/title.pdf}%
+}{%
+  \includepdf[pages=-]{pws/3/docs/title.pdf}%
+}
+
+\selectlanguage{ukrainian}
+
+\crefname{figure}{рис.}{рис.}
+\Crefname{figure}{Рисунок}{Рисунки}
+\crefname{table}{табл.}{табл.}
+\Crefname{table}{Таблиця}{Таблиці}
+\crefname{section}{розд.}{розд.}
+\Crefname{section}{Розділ}{Розділи}
+\crefname{equation}{формула}{формули}
+\Crefname{equation}{Формула}{Формули}
+\renewcommand{\crefrangeconjunction}{~--~}
+\renewcommand{\crefpairconjunction}{ та~}
+\renewcommand{\crefmiddleconjunction}{, }
+\renewcommand{\creflastconjunction}{ та~}
+
+\setlength{\fboxsep}{0pt}
+\setlength{\fboxrule}{0.5pt}
+
+\titleformat{\section}[block]
+{\filcenter\bfseries\fontsize{16pt}{24pt}\selectfont}
+{}
+{0pt}
+{\MakeUppercase}
+\titlespacing*{\section}{0pt}{20pt}{6pt}
+
+% ==================== CONTENT ====================
+\section{ПРАКТИЧНА РОБОТА № 3}
+
+\textbf{Тема:} Пошук наукової літератури за допомогою спеціалізованих пошукових систем та бібліографічних баз.
+
+\textbf{Мета:} Навчитися здійснювати пошук наукової літератури за допомогою спеціалізованих пошукових систем та бібліографічних баз (Scopus, Google Академія) релевантних темі дипломної роботи.
+
+\subsection{Постановка завдання}
+Здійснити пошук за ключовими словами релевантних до теми дипломної роботи наукових праць у системі Google Академія та наукометричній базі Scopus. Під час пошуку у базі Scopus, сформувати необхідний запит, який забезпечить можливість отримання невеликої кількості (до 50) релевантних до теми диплому наукових праць~\cite{izonin2026}.
+
+\subsection{Порядок виконання роботи}
+
+\subsubsection{Тема, мета, об'єкт і предмет дослідження БКР}
+
+\textbf{Тема:} «Розробка системи керування рухом нижніх кінцівок двоногого робота».
+
+\textbf{Мета:} розробити та оцінити систему керування на основі навчання з підкріпленням та інтеграції зовнішніх сенсорів для забезпечення ходи двоногого робота по нерівних і неструктурованих поверхнях.
+
+\textbf{Об'єкт:} локомоція двоногого робота на нерівних і неструктурованих поверхнях.
+
+\textbf{Предмет:} системи керування на основі навчання з підкріпленням, що інтегрують екстероцепцію для стійкого пересування на нерівних і неструктурованих поверхнях.
+
+Ключові слова БКР описано у~\cref{tab:keywords}.
+
+\begin{table}[H]
+  \caption{Ключові слова українською та англійською мовами.}
+  \label{tab:keywords}
+  \centering
+  \begin{tabular}{|c|l|l|}
+    \hline
+    \textbf{№} & \textbf{Українська}              & \textbf{Англійська}           \\
+    \hline
+    1          & гуманоїд                         & humanoid                      \\
+    \hline
+    2          & локомоція                        & locomotion                    \\
+    \hline
+    3          & навчання з підкріпленням         & reinforcement learning        \\
+    \hline
+    4          & мапа висот                       & height map                    \\
+    \hline
+    5          & симуляція                        & simulation                    \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\subsubsection{Пошук у Google Scholar}
+
+За ключовими словами з~\cref{tab:keywords} спочатку сформовано пошуковий запит українською мовою, однак жодного релевантного результату не знайдено. Потім той самий набір ключових слів використано англійською мовою; з обмеженням «за останній рік» та виключенням патентів і цитувань отримано 107 джерел (\cref{fig:google_scholar_search}).
+
+\begin{figure}[h]
+  \centering
+  \fbox{\includegraphics[width=0.88\linewidth]{google_scholar.jpg}}
+  \caption{Результати пошуку в Google Scholar за англомовним запитом.}
+  \label{fig:google_scholar_search}
+\end{figure}
+
+До бібліотеки Zotero було додано три найбільш цитовані зі знайдених статті:
+\begin{itemize}
+  \item Song H. et al. \href{https://doi.org/10.1109/LRA.2026.3664167}{Gait-Adaptive Perceptive Humanoid Locomotion With Real-Time Under-Base Terrain Reconstruction}. 2026~\cite{songGaitAdaptivePerceptiveHumanoid2026};
+  \item Sun J. et al. \href{https://doi.org/10.1109/LRA.2026.3703584}{DPL: Depth-Only Perceptive Humanoid Locomotion via Realistic Depth Synthesis and Cross-Attention Terrain Reconstruction}. 2026~\cite{sunDPLDepthOnlyPerceptive2026};
+  \item Uddin M. S. \href{https://doi.org/10.1038/s41598-025-34956-7}{Adaptive Motion Planning for Legged Robots in Unstructured Terrain Using Deep Reinforcement Learning}. 2026~\cite{uddinAdaptiveMotionPlanning2026}.
+\end{itemize}
+
+\subsubsection{Пошук у Scopus}
+
+Спочатку в базі Scopus виконано пошук з використанням усіх англомовних ключових слів з~\cref{tab:keywords}, однак отримано 0 результатів. Після цього ключове слово «height map» виключено з запиту та застосовано такі фільтри:
+\begin{itemize}
+  \item роки публікації~--- із 2024 по 2026;
+  \item лише відкритий доступ;
+  \item тип документа~--- лише статті;
+  \item мова~--- англійська;
+  \item предметна область~--- комп'ютерні науки.
+\end{itemize}
+
+Знайдено 14 джерел (\cref{fig:scopus_search}) й отримано такий пошуковий запит: (TITLE-ABS-KEY(humanoid AND locomotion AND "reinforcement learning" AND simulation) AND ( LIMIT-TO ( SUBJAREA, "COMP" ) ) AND ( LIMIT-TO ( DOCTYPE, "ar" ) ) AND ( LIMIT-TO ( LANGUAGE, "English" ) ) AND ( LIMIT-TO ( OA, "all" ) ) AND PUBYEAR > 2023 AND PUBYEAR < 2028)).
+
+\begin{figure}[h]
+  \centering
+  \fbox{\includegraphics[width=0.88\linewidth]{scopus.jpg}}
+  \caption{Результати пошуку в Scopus за уточненим запитом.}
+  \label{fig:scopus_search}
+\end{figure}
+
+До бібліотеки Zotero додано три найбільш цитовані зі знайдених статті:
+\begin{itemize}
+  \item Li Z. et al. \href{https://doi.org/10.1177/02783649241285161}{Reinforcement Learning for Versatile, Dynamic, and Robust Bipedal Locomotion Control}. 2025~\cite{liReinforcementLearningVersatile2025};
+  \item Li G. et al. \href{https://doi.org/10.1109/LRA.2024.3388842}{AI-CPG: Adaptive Imitated Central Pattern Generators for Bipedal Locomotion Learned Through Reinforced Reflex Neural Networks}. 2024~\cite{liAICPGAdaptiveImitated2024};
+  \item Sun S. et al. \href{https://doi.org/10.1016/j.birob.2024.100187}{Leveraging Large Language Models for Comprehensive Locomotion Control in Humanoid Robots Design}. 2024~\cite{sunLeveragingLargeLanguage2024}.
+\end{itemize}
+
+\subsubsection{Бібліотека в Zotero}
+
+Усі знайдені під час пошуку джерела додано до тематичної колекції «Science» у бібліографічному менеджері Zotero (\cref{fig:zotero_science}).
+
+\begin{figure}[h]
+  \centering
+  \fbox{\includegraphics[width=0.88\linewidth]{zotero.jpg}}
+  \caption{Колекція «Science» у бібліотеці Zotero з імпортованими джерелами.}
+  \label{fig:zotero_science}
+\end{figure}
+
+Отримані джерела експортовано у форматі BibTeX, і за допомогою відповідного пакету \LaTeX{} сформовано бібліографію у форматі IEEE (\cref{fig:ieee_bibliography}).
+
+\begin{figure}[h]
+  \centering
+  \fbox{\includegraphics[width=0.44\linewidth]{ieee.jpg}}
+  \caption{Список використаних джерел, оформлений у стилі IEEE.}
+  \label{fig:ieee_bibliography}
+\end{figure}
+
+\subsection{Висновки}
+
+Під час виконання практичної роботи було вказано тему, мету, предмет і об'єкт дослідження бакалаврської кваліфікаційної роботи, записано ключові слова роботи українською та англійською мовами й виконано пошук наукових робіт за поданою тематикою.
+
+Пошук здійснено за заданими ключовими словами у Google Scholar і Scopus із використанням необхідних фільтрів для обмеження кількості отриманих результатів. У випадку Scopus пошуковий запит експортовано у текстовому форматі, що забезпечує його відтворюваність.
+
+Отриманий практичний досвід пошуку наукових джерел знадобиться при написанні магістерської кваліфікаційної роботи, а саме для розділу з аналізом літературних джерел.
+
+Звіт було створено із використанням \LaTeX{}. Увесь код доступний у публічному репозиторії~\cite{github_science}.
+
+% ==================== BIBLIOGRAPHY ====================
+\clearpage
+\printbibliography[heading=bibintoc,title={СПИСОК ВИКОРИСТАНИХ ДЖЕРЕЛ}]
+
+\end{document}

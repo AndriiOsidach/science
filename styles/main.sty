@@ -5,6 +5,7 @@
 \newif\ifmainvancouver
 \newif\ifmainmdpi
 \newif\ifmaindstu
+\newif\ifmainieee
 \DeclareOption{apa}{\mainapatrue}
 \DeclareOption{vancouver}{\mainvancouvertrue}
 \DeclareOption{mdpi}{\mainmdpitrue}
@@ -13,6 +14,8 @@
 \DeclareOption{MPDI}{\mainmdpitrue}
 \DeclareOption{dstu}{\maindstutrue}
 \DeclareOption{DSTU}{\maindstutrue}
+\DeclareOption{ieee}{\mainieeetrue}
+\DeclareOption{IEEE}{\mainieeetrue}
 \DeclareOption*{\PassOptionsToPackage{\CurrentOption}{biblatex}}
 \ProcessOptions\relax
 
@@ -349,6 +352,87 @@
     }%
   }%
 }
+\else\ifmainieee
+\RequirePackage[
+  backend=biber,
+  style=ieee,
+  sorting=none,
+  autolang=other,
+  isbn=false,
+  maxbibnames=6,
+  minbibnames=6,
+  giveninits=true
+]{biblatex}
+
+\DeclareLanguageMapping{ukrainian}{english}
+
+% EngCite IEEE guide: https://www.engcite.com/guide/ieee-format
+\DefineBibliographyStrings{english}{%
+  urlseen = {accessed},
+}
+
+\DeclareFieldFormat{urldate}{#1}
+
+\DeclareFieldFormat{url}{%
+  \bibstring{url}\addcolon\space\url{#1}\isdot
+}
+
+\DeclareFieldFormat{doi}{%
+  doi\addcolon\space
+  \ifhyperref
+    {\href{https://doi.org/#1}{\nolinkurl{#1}}}
+    {\nolinkurl{#1}}%
+  \nopunct}
+
+\renewbibmacro*{journal}{%
+  \iffieldundef{journaltitle}
+    {}
+    {%
+      \printtext[journaltitle]{%
+        \iffieldundef{shortjournal}
+          {\printfield[titlecase]{journaltitle}}
+          {\printfield{shortjournal}}%
+        \setunit{\subtitlepunct}%
+        \printfield[titlecase]{journalsubtitle}%
+      }%
+    }%
+  \midsentence
+}
+
+% [Online]. Available: URL (accessed Mon. DD, YYYY)
+\renewbibmacro*{url+urldate}{%
+  \usebibmacro{url}%
+  \iffieldundef{urlyear}
+    {}
+    {%
+      \addspace
+      \printtext[parens]{%
+        \bibstring{urlseen}\space\printurldate
+      }%
+    }%
+}
+
+% Prefer DOI; omit URL and access date when DOI is present
+\renewbibmacro*{doi+eprint+url}{%
+  \iffieldundef{doi}{}{%
+    \setunit{\addcomma\addspace}%
+    \printfield{doi}%
+  }%
+  \iffieldundef{doi}{%
+    \iftoggle{bbx:eprint}{%
+      \setunit{\addcomma\addspace}%
+      \usebibmacro{eprint}%
+    }{}%
+    \iftoggle{bbx:url}{%
+      \usebibmacro{url+urldate}%
+    }{}%
+  }{%
+    \iftoggle{bbx:eprint}{%
+      \setunit{\addcomma\addspace}%
+      \usebibmacro{eprint}%
+    }{}%
+  }%
+}
 \else\ifmaindstu
 \RequirePackage[
   backend=biber,
@@ -385,9 +469,6 @@
        \thefield{urlyear}}}}
 
 \DefineBibliographyStrings{ukrainian}{%
-  urlseen = {дата звернення:},
-}
-\DefineBibliographyStrings{english}{%
   urlseen = {дата звернення:},
 }
 
@@ -438,7 +519,7 @@
     }
   }
 }
-\fi\fi\fi\fi
+\fi\fi\fi\fi\fi
 
 \setcounter{biburllcpenalty}{7000}
 \setcounter{biburlucpenalty}{8000}
