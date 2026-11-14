@@ -1,0 +1,181 @@
+\documentclass{article}
+
+\IfFileExists{styles/main.sty}{%
+  \usepackage[dstu]{styles/main}%
+}{%
+  \usepackage[dstu]{../../styles/main}%
+}
+
+\usepackage{xurl}
+\usepackage{cleveref}
+\addbibresource{pws/4/references.bib}
+
+\begin{document}
+
+% ==================== TITLE PAGE ====================
+\IfFileExists{docs/title.pdf}{%
+  \includepdf[pages=-]{docs/title.pdf}%
+}{%
+  \includepdf[pages=-]{pws/4/docs/title.pdf}%
+}
+
+\selectlanguage{ukrainian}
+
+\setlength{\fboxsep}{0pt}
+\setlength{\fboxrule}{0.5pt}
+
+\titleformat{\section}[block]
+{\filcenter\bfseries\fontsize{16pt}{24pt}\selectfont}
+{}
+{0pt}
+{\MakeUppercase}
+\titlespacing*{\section}{0pt}{20pt}{6pt}
+
+\section{ПРАКТИЧНА РОБОТА № 4}
+
+\textbf{Тема:} Вибір надійного наукового видання для опублікування результатів наукових досліджень (сервіс «Journal Finder» від видавництва Elsevier, РЕЄСТР наукових фахових видань України).
+
+\textbf{Мета:} Навчитися шукати, обирати та обґрунтовувати вибір періодичного наукового видання для опублікування результатів наукових досліджень (українські та закордонні наукові видання).
+
+\subsection{Постановка завдання}
+Здійснити пошук, вибір та обґрунтування вибору наукового періодичного видання (українського та закордонного) для опублікування результатів наукових досліджень~\cite{izonin2026}.
+
+\subsection{Порядок виконання роботи}
+
+\subsubsection{Інформація про статтю}
+
+Для виконання даної роботи використано статтю, написану у співавторстві та опубліковану у журналі «Науковий вісник НЛТУ України»~\cite{mochurad2024parallel}.
+
+\textbf{Назва.}
+Паралельний метод RANSAC для потокового оброблення даних сенсорів LiDAR.
+
+\textbf{Анотація.}
+Встановлено, що технологія LiDAR у кластеризації дає змогу підвищити ефективність потокового оброблення даних й отримати точніші результати. Проаналізовано, що проблема створення тривимірного контуру кімнати на підставі даних, зібраних сенсорами виявлення та визначення відстані LiDAR, є ключовим аспектом просторового аналізу, оскільки від цього залежить точність моделі довкільного простору. З'ясовано, що одним з ефективних підходів до вирішення цієї проблеми є використання методу консенсусу випадкової вибірки RANSAC, який дає змогу виділити і відокремити відхилення та випадкові помилки в даних, що отримані зі сенсорів. Запропоновано вдосконалити метод RANSAC шляхом використання технології паралельних обчислень. Це дало можливість розділити початкове завдання на менші частини та обробляти їх одночасно, що сприяє збільшенню швидкості оброблення даних і зменшенню тривалості виконання алгоритму. Оцінено продуктивність методу кластеризації у спосіб запуску програми на виконання 50 разів для послідовного та розпаралеленого алгоритмів, зберігаючи час кожного запуску для розрахунку середньої тривалості виконання. Наведено теоретичну апріорну оцінку показника пришвидшення для різної кількості паралельних потоків. Унаслідок цього здійснено порівняння фактичної ефективності з теоретичною оцінкою. Наведено результати, які вказують на масштабованість підходу та його потенціал для подальшого підвищення ефективності систем за використання більшої кількості обчислювальних ядер. Зменшено тривалість обчислення в 5,5 раза за використання 8 паралельних потоків порівняно з послідовним виконанням, що підкреслює значну перевагу паралельних обчислень під час оброблення великих даних, таких як хмари точок. Наведено результати оцінювання обчислювальної складності послідовного та вдосконаленого паралельного алгоритмів та проаналізовано показники ефективності паралельного. Подальші дослідження полягають у модифікації методів кластеризації на підставі LiDAR для різних застосувань, враховуючи робототехніку та геологічні дослідження, а також розроблення ефективних підходів до паралельного оброблення даних з інших типів сенсорів.
+
+\textbf{Ключові слова.}
+Кластеризація, сенсор, розпаралелення, тривимірні моделі, пришвидшення.
+
+\textbf{Title.}
+Parallel RANSAC method for streaming data from LiDAR sensors.
+
+\textbf{Abstract.}
+LiDAR technology finds applications in diverse fields such as topographic mapping, urban planning, forestry management, disaster response, infrastructure inspection, autonomous vehicles, archaeology, mining, meteorology, and environmental monitoring. Its integration within clustering methodologies offers improved data processing efficiency and result accuracy. A critical aspect of spatial analysis involves delineating three-dimensional room contours based on data acquired from LiDAR detection and ranging sensors, as the fidelity of the surrounding space model hinges upon this process. Investigation reveals that leveraging the RANSAC (Random Sample Consensus) algorithm proves to be an effective strategy for tackling this challenge, facilitating the identification and segregation of deviations and random errors within sensor data. This study proposes an enhancement to the RANSAC algorithm through the integration of parallel computing technologies. This advancement enables the subdivision of the original problem into smaller segments, allowing for concurrent processing and consequent acceleration of data processing speed alongside a reduction in algorithm execution duration. The efficacy of the clustering algorithm is evaluated by executing the program 50 times in both sequential and parallel modes while maintaining consistent run times for each iteration to compute average execution durations. Theoretical speedup estimates are computed for varying numbers of parallel threads, subsequently juxtaposed against actual efficiency metrics. Findings indicate scalability and potential for further efficiency enhancements within systems employing additional computing cores. Notably, employing 8 parallel threads yields a reduction in computation time by a factor of 5.5 compared to sequential execution, underscoring the potency of parallel computing in handling vast datasets like point clouds. Additionally, computational complexity is assessed, and the performance of the proposed approach is analyzed. Future research endeavors aim to optimize LiDAR-based clustering algorithms for diverse applications encompassing robotics and geology. Furthermore, emphasis will be placed on devising efficient strategies for parallel processing across different data types and sensor modalities.
+
+\textbf{Keywords.}
+Clustering, sensor, parallelization, three-dimensional models, acceleration.
+
+\subsubsection{Пошук із використанням сервісу «Journal Finder»}
+
+Було здійснено пошук наукових періодичних видань із використанням сервісу «Journal Finder» видавництва Elsevier~\cite{journal_finder}. Для цього використано анотацію статті англійською мовою, наведену в попередньому підрозділі. У фільтрі типу публікації обрано лише «Journals with subscription», аби мати змогу опублікувати статтю безкоштовно за передплатною моделлю. Сервіс запропонував 40 журналів. Результати пошуку наведено на рис.~\ref{fig:journal_finder}.
+
+\begin{figure}[H]
+  \centering
+  \IfFileExists{figures/journal_finder.jpg}{%
+    \fbox{\includegraphics[width=\dimexpr\linewidth-2\fboxrule\relax]{figures/journal_finder.jpg}}%
+  }{%
+    \fbox{\includegraphics[width=\dimexpr\linewidth-2\fboxrule\relax]{pws/4/figures/journal_finder.jpg}}%
+  }
+  \caption{Результати пошуку журналів за англомовною анотацією в сервісі «Journal Finder».}
+  \label{fig:journal_finder}
+\end{figure}
+
+Далі було розглянуто п'ять журналів, отриманих із пошуку: Parallel Computing~\cite{parallel_computing}, Journal of Parallel and Distributed Computing~\cite{jpdc}, Robotics and Autonomous Systems~\cite{ras}, ISPRS Journal of Photogrammetry and Remote Sensing~\cite{isprs_journal} та Expert Systems with Applications~\cite{eswa}. Їхні показники наведено в табл.~\ref{tab:journal_comparison}.
+
+Імпакт-фактори та часові показники наведено за даними Elsevier у результатах пошуку «Journal Finder». Квартилі SJR за 2025 рік визначено за даними SCImago Journal \& Country Rank у предметних категоріях, що відповідають дослідженню: \textit{Software} для Parallel Computing та Journal of Parallel and Distributed Computing (програмна реалізація паралельних алгоритмів), \textit{Computer Science Applications} для решти трьох журналів (прикладне опрацювання даних LiDAR).
+
+\begin{table}[H]
+  \caption{Порівняння п'яти журналів, запропонованих сервісом «Journal Finder».}
+  \label{tab:journal_comparison}
+  \centering
+  \begingroup
+  \small
+  \setlength{\tabcolsep}{4pt}
+  \renewcommand{\arraystretch}{1.25}
+  \begin{tabular}{|p{0.30\linewidth}|p{0.11\linewidth}|p{0.13\linewidth}|p{0.17\linewidth}|p{0.17\linewidth}|}
+    \hline
+    \textbf{Назва журналу} & \textbf{Імпакт-фактор} & \textbf{Квартиль SJR, 2025} & \textbf{Від подання до першого рішення, днів} & \textbf{Від прийняття до публікації, днів} \\
+    \hline
+    Parallel Computing & 1,1 & Q3~\cite{sjr_parallel} & 7 & 6 \\
+    \hline
+    Journal of Parallel and Distributed Computing & 3,4 & Q2~\cite{sjr_jpdc} & 25 & 6 \\
+    \hline
+    Robotics and Autonomous Systems & 6,0 & Q1~\cite{sjr_ras} & 32 & 9 \\
+    \hline
+    ISPRS Journal of Photogrammetry and Remote Sensing & 12,9 & Q1~\cite{sjr_isprs} & 5 & 12 \\
+    \hline
+    Expert Systems with Applications & 9,4 & Q1~\cite{sjr_eswa} & 5 & 7 \\
+    \hline
+  \end{tabular}
+  \endgroup
+\end{table}
+
+Для опублікування результатів дослідження обрано Journal of Parallel and Distributed Computing~\cite{jpdc}. Його тематика охоплює паралельні алгоритми, їхню реалізацію та оцінювання продуктивності, що відповідає основному внеску статті: розпаралеленню RANSAC для опрацювання даних LiDAR, аналізу масштабованості та отриманому пришвидшенню в 5,5 раза за використання восьми потоків. Журнал має імпакт-фактор 3,4 та квартиль Q2 у категорії \textit{Software}. Parallel Computing також відповідає тематиці дослідження, однак має нижчий імпакт-фактор~--- 1,1 та третій квартиль (Q3) у цій самій категорії. Його перевагою є коротший час до першого рішення: 7 днів проти 25 днів у Journal of Parallel and Distributed Computing; час від прийняття до публікації в обох журналах становить 6 днів. З огляду на тематичну відповідність і вищі бібліометричні показники перевагу надано Journal of Parallel and Distributed Computing.
+
+Інші три журнали меншою мірою відповідають основному спрямуванню статті. Robotics and Autonomous Systems~\cite{ras} зосереджується на робототехніці та автономних системах, тому для нього важливо продемонструвати вплив швидшого опрацювання LiDAR на роботу конкретної робототехнічної системи. ISPRS Journal of Photogrammetry and Remote Sensing~\cite{isprs_journal} орієнтований на фотограмметрію, дистанційне зондування та просторову інформацію, тож для нього доцільніше акцентувати внесок у реконструкцію геометрії чи аналіз хмар точок. Expert Systems with Applications~\cite{eswa} спеціалізується на експертних та інтелектуальних системах і їхніх застосуваннях, тоді як розглянута стаття присвячена передусім прискоренню обчислень за допомогою паралельного виконання RANSAC.
+
+\begingroup
+\setlength{\emergencystretch}{2em}
+\subsubsection{Пошук із використанням сервісу «ФАХ»}
+
+На момент виконання роботи \href{https://nfv.ukrintei.ua/}{«РЕЄСТР наукових фахових видань України»}~\cite{nfv_registry} був недоступний, тому як альтернативу використано сервіс «ФАХ»~\cite{fakh}. Було здійснено пошук фахових видань України для спеціальності 122 «Комп'ютерні науки» з можливістю публікації українською мовою. Для цього обрано відповідну спеціальність і мову повного тексту «українська». За встановленими параметрами сервіс відобразив 120 результатів. Параметри пошуку та кількість знайдених результатів наведено на рис.~\ref{fig:fakh}.
+
+\begin{figure}[H]
+  \centering
+  \IfFileExists{figures/fakh.jpg}{%
+    \fbox{\includegraphics[width=\dimexpr\linewidth-2\fboxrule\relax]{figures/fakh.jpg}}%
+  }{%
+    \fbox{\includegraphics[width=\dimexpr\linewidth-2\fboxrule\relax]{pws/4/figures/fakh.jpg}}%
+  }
+  \caption{Параметри пошуку видань у сервісі «ФАХ» та кількість результатів.}
+  \label{fig:fakh}
+\end{figure}
+
+Для порівняння розглянуто п'ять журналів за спеціальністю 122 «Комп'ютерні науки», які підтримують українську мову повного тексту та відповідають тематиці дослідження (табл.~\ref{tab:fakh_journals}). Crossref є сервісом реєстрації DOI та метаданих, а DOAJ~--- каталогом журналів відкритого доступу; їх зазначено окремо від наукометричної бази Scopus відповідно до позначок сервісу «ФАХ».
+
+\begin{table}[H]
+  \caption{Порівняння українських фахових видань за даними сервісу «ФАХ».}
+  \label{tab:fakh_journals}
+  \centering
+  \begingroup
+  \small
+  \setlength{\tabcolsep}{4pt}
+  \renewcommand{\arraystretch}{1.25}
+  \begin{tabular}{|p{0.30\linewidth}|p{0.10\linewidth}|p{0.23\linewidth}|p{0.17\linewidth}|p{0.08\linewidth}|}
+    \hline
+    \textbf{Назва журналу} & \textbf{Категорія} & \textbf{Індексація / представлення} & \textbf{Вартість публікації} & \textbf{Випусків на рік} \\
+    \hline
+    Український журнал інформаційних технологій~\cite{fakh_ujit} & Б & Google Scholar; Crossref & Безкоштовно до 15 сторінок & 2 \\
+    \hline
+    Системні дослідження та інформаційні технології~\cite{fakh_srit} & А & Scopus; Google Scholar; DOAJ; Crossref & Не вказано & 4 \\
+    \hline
+    Науковий вісник НЛТУ України~\cite{fakh_nltu} & Б & Google Scholar; Crossref & Від 900 грн & 6 \\
+    \hline
+    Інформаційні технології та системи~\cite{fakh_its} & Б & Google Scholar & Безкоштовно & 6 \\
+    \hline
+    Інформаційні технології та інженерна електроніка~\cite{fakh_itee} & Б & Google Scholar & Не вказано & 2 \\
+    \hline
+  \end{tabular}
+  \endgroup
+\end{table}
+
+Позначення «Не вказано» означає відсутність зазначеної вартості на сторінці журналу у ФАХ. Для журналів «Інформаційні технології та системи» й «Інформаційні технології та інженерна електроніка» Crossref позначено як відсутній, тому його не включено до переліку ресурсів представлення. Для «Наукового вісника НЛТУ України» у ФАХ наведено базову вартість 1000 грн за 15 сторінок та знижку 10~\% для українських авторів на період воєнного стану, що відповідає зазначеній у таблиці сумі від 900 грн. Для аспірантів бюджетної форми підготовки передбачено безкоштовну одноосібну публікацію.
+
+Для публікації українською мовою обрано «Український журнал інформаційних технологій»~\cite{fakh_ujit}. Видання охоплює теоретичні та прикладні дослідження з комп'ютерних наук, програмування й інформаційних технологій, тому тематика паралельного алгоритму RANSAC для опрацювання даних LiDAR відповідає його спрямуванню. Журнал належить до категорії Б за спеціальністю 122 «Комп'ютерні науки», приймає українськомовні статті та забезпечує безкоштовну публікацію матеріалів обсягом до 15 сторінок. Поєднання тематичної відповідності, потрібної мови та визначених умов публікації робить його доцільним вибором. Періодичність два випуски на рік потрібно враховувати під час планування подання.
+
+«Системні дослідження та інформаційні технології» має переваги категорії А й індексації у Scopus, однак його основний акцент на системному аналізі та моделях керування менш безпосередньо відповідає програмній реалізації паралельного RANSAC; вартість публікації у ФАХ не уточнена. «Науковий вісник НЛТУ України» є тематично придатним виданням, що підтверджує публікація в ньому розглянутої статті, та має перевагу шести випусків на рік (висока частота випусків була критичним показником на момент публікації, оскільки потрібно було якомога швидше отримати публікацію). Проте загальні умови передбачають оплату публікації, тоді як обраний журнал пропонує безкоштовне розміщення матеріалів до 15 сторінок. «Інформаційні технології та системи» є придатною безкоштовною альтернативою з шістьма випусками на рік, але його акцент на інтелектуальному керуванні та системах підтримки знань менш точно відповідає дослідженню продуктивності паралельного алгоритму. «Інформаційні технології та інженерна електроніка» охоплює також електроніку, радіотехніку й приладобудування, тоді як основний результат статті є програмно-алгоритмічним; крім того, у ФАХ не зазначено вартості публікації. Тому за сукупністю обраних критеріїв перевагу надано «Українському журналу інформаційних технологій».
+
+\endgroup
+\subsection{Висновки}
+
+Під час виконання практичної роботи було відібрано п'ять іноземних журналів для потенційної публікації вихідної статті за допомогою сервісу «Journal Finder» на основі анотації англійською мовою. Отримані журнали порівняно за тематикою, імпакт-фактором, квартилем та часовими показниками розгляду й публікації: від подання до першого рішення та від прийняття до публікації. За результатами порівняння обрано Journal of Parallel and Distributed Computing як журнал, що найкраще відповідає заданій статті.
+
+Також для публікації цієї ж статті українською мовою було відібрано п'ять українських наукових журналів за допомогою сервісу «ФАХ» на основі пошукового запиту із зазначенням спеціальності 122 «Комп'ютерні науки» та української мови повного тексту. Отримані журнали порівняно за категорією, індексацією, вартістю публікації та кількістю випусків на рік. Обрано «Український журнал інформаційних технологій», який найкраще відповідає тематиці заданої статті та передбачає безкоштовну публікацію матеріалів обсягом до 15 сторінок.
+
+Отримані практичні навички допоможуть ефективно знаходити та обирати видання для публікації наукової статті на основі майбутньої магістерської роботи.
+
+Звіт було створено із використанням \LaTeX{}. Увесь код доступний у публічному репозиторії~\cite{github_science}.
+
+\clearpage
+\printbibliography[heading=bibintoc,title={СПИСОК ВИКОРИСТАНИХ ДЖЕРЕЛ}]
+
+\end{document}
